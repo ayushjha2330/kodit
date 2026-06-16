@@ -2,7 +2,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Hero from "../component/projects-hero-section";
+import Hero from "../component/project/projects-hero-section";
 import Grid from "../component/project/projects-grid-section";
 import Numbers from "../component/project/projects-numbers-section";
 import Process from "../component/project/projects-process-section";
