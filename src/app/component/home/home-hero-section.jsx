@@ -128,8 +128,6 @@ export default function Hero() {
         </div>
       </div>
 
-      <Marquee />
-
       <style jsx global>{`
         .hero-root {
           min-height: 100svh;
