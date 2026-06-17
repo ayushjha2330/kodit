@@ -1,0 +1,9 @@
+⚠ Port 3000 is in use by process 18396, using available port 3002 instead.
+⨯ Another next dev server is already running.
+
+- Local:        http://localhost:3001
+- PID:          15404
+- Dir:          C:\Users\ayush\OneDrive\Documents\website\Kodit
+- Log:          .next\dev\logs\next-development.log
+
+Run taskkill /PID 15404 /F to stop it.
