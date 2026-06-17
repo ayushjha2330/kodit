@@ -3,10 +3,12 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const services = [
-  { id: "web", num: "01", title: "Web Development", tagline: "Ultra-fast Next.js & React sites" },
-  { id: "seo", num: "02", title: "SEO Optimisation", tagline: "Rank page 1 for buyer-intent keywords" },
-  { id: "gmb", num: "03", title: "GMB Optimisation", tagline: "Dominate Google Maps 3-Pack in Delhi" },
-  { id: "design", num: "04", title: "Graphic Design & Branding", tagline: "Visual authority that commands premium pricing" },
+  { id: "web", num: "01", title: "Web Development", tagline: "Fast, conversion-focused websites in 14 days" },
+  { id: "seo", num: "02", title: "SEO", tagline: "Rank page 1 for buyer-intent keywords" },
+  { id: "gmb", num: "03", title: "Google Business Profile", tagline: "Dominate Google Maps in your local area" },
+  { id: "design", num: "04", title: "Graphic Design", tagline: "Visual authority that builds trust" },
+  { id: "social", num: "05", title: "Social Media Marketing", tagline: "Strategic content that drives engagement" },
+  { id: "ai", num: "06", title: "AI Automation", tagline: "Workflow automation that saves time & money" },
 ];
 
 export default function ServiceListSection({ setActive }) {

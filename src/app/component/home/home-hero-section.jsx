@@ -2,7 +2,8 @@
 import { useEffect, useRef } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
-import Marquee from "../service/service-marquee-section";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ServiceMarquee from "../service/service-marquee-section";
 
 export default function Hero() {
   const sectionRef = useRef(null);
@@ -17,23 +18,74 @@ export default function Hero() {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
+      // Entrance animations
       tl.fromTo(eyebrowRef.current, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.7 })
-        .fromTo(h1Ref.current.querySelectorAll(".h1-line"), { opacity: 0, y: 60, skewY: 4 }, { opacity: 1, y: 0, skewY: 0, duration: 0.9, stagger: 0.12 }, "-=0.3")
+        .fromTo(
+          h1Ref.current.querySelectorAll(".h1-line"),
+          { opacity: 0, y: 60, skewY: 4 },
+          { opacity: 1, y: 0, skewY: 0, duration: 0.9, stagger: 0.12 },
+          "-=0.3"
+        )
         .fromTo(subRef.current, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7 }, "-=0.4")
-        .fromTo(ctaRef.current.querySelectorAll("a"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 }, "-=0.3")
-        .fromTo(statsRef.current.querySelectorAll(".stat-item"), { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 }, "-=0.2")
-        .fromTo(".hero-float-card", { opacity: 0, y: 40, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.15, ease: "back.out(1.2)" }, "-=0.8");
+        .fromTo(
+          ctaRef.current.querySelectorAll("a"),
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.6, stagger: 0.1 },
+          "-=0.3"
+        )
+        .fromTo(
+          statsRef.current.querySelectorAll(".stat-item"),
+          { opacity: 0, y: 20 },
+          { opacity: 1, y: 0, duration: 0.5, stagger: 0.08 },
+          "-=0.2"
+        )
+        .fromTo(
+          ".hero-float-card",
+          { opacity: 0, y: 40, scale: 0.9 },
+          { opacity: 1, y: 0, scale: 1, duration: 0.8, stagger: 0.15, ease: "back.out(1.2)" },
+          "-=0.8"
+        );
 
-      gsap.to(glowRef.current, { y: -24, duration: 3.5, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".hero-float-1", { y: -15, duration: 3, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".hero-float-2", { y: 15, duration: 4, ease: "sine.inOut", yoyo: true, repeat: -1 });
-      gsap.to(".hero-float-3", { y: -10, x: 10, duration: 5, ease: "sine.inOut", yoyo: true, repeat: -1 });
+      // Floating animations
+      gsap.to(glowRef.current, {
+        y: -24,
+        duration: 3.5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+      gsap.to(".hero-float-1", {
+        y: -15,
+        duration: 3,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+      gsap.to(".hero-float-2", {
+        y: 15,
+        duration: 4,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
+      gsap.to(".hero-float-3", {
+        y: -10,
+        x: 10,
+        duration: 5,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
 
+      // Parallax / tilt on mouse move
       const section = sectionRef.current;
       const cards = section.querySelectorAll(".hero-float-card");
-      const cardData = Array.from(cards).map(el => ({ el, rect: null }));
+      const cardData = Array.from(cards).map((el) => ({ el, rect: null }));
 
-      const updateRects = () => cardData.forEach(item => { item.rect = item.el.getBoundingClientRect(); });
+      const updateRects = () =>
+        cardData.forEach((item) => {
+          item.rect = item.el.getBoundingClientRect();
+        });
 
       section.addEventListener("mouseenter", updateRects);
       window.addEventListener("resize", updateRects);
@@ -41,18 +93,54 @@ export default function Hero() {
       const onMove = (e) => {
         const xPos = (e.clientX / window.innerWidth - 0.5) * 20;
         const yPos = (e.clientY / window.innerHeight - 0.5) * 10;
-        gsap.to(".hero-dot-grid", { x: xPos, y: yPos, duration: 1.2, ease: "power2.out" });
+        gsap.to(".hero-dot-grid", {
+          x: xPos,
+          y: yPos,
+          duration: 1.2,
+          ease: "power2.out",
+        });
 
-        cardData.forEach(item => {
+        cardData.forEach((item) => {
           if (!item.rect) item.rect = item.el.getBoundingClientRect();
           const rect = item.rect;
           const deltaX = (e.clientX - (rect.left + rect.width / 2)) / 30;
           const deltaY = (e.clientY - (rect.top + rect.height / 2)) / 30;
-          gsap.to(item.el, { rotateX: -deltaY, rotateY: deltaX, duration: 0.5, ease: "power2.out" });
+          gsap.to(item.el, {
+            rotateX: -deltaY,
+            rotateY: deltaX,
+            duration: 0.5,
+            ease: "power2.out",
+          });
         });
       };
 
       section.addEventListener("mousemove", onMove);
+
+      // ------ NEW: Counter animation for stats ------
+      const statNumbers = statsRef.current.querySelectorAll(".stat-num");
+      statNumbers.forEach((el) => {
+        const target = parseFloat(el.innerText);
+        if (isNaN(target)) return;
+        // Remove any non-digit chars for counting (like +, %)
+        const suffix = el.innerText.replace(/[\d.]/g, "");
+        const numericTarget = parseFloat(el.innerText);
+
+        gsap.fromTo(
+          el,
+          { innerText: 0 },
+          {
+            innerText: numericTarget,
+            duration: 2,
+            ease: "power2.out",
+            snap: { innerText: 1 },
+            onUpdate: () => {
+              // Re‑apply suffix after update
+              el.innerText = Math.floor(parseFloat(el.innerText)) + suffix;
+            },
+          }
+        );
+      });
+
       return () => {
         section.removeEventListener("mousemove", onMove);
         section.removeEventListener("mouseenter", updateRects);
@@ -73,38 +161,49 @@ export default function Hero() {
 
       <div className="hero-float-card hero-float-1">
         <div className="hf-dot" style={{ background: "#e84d0e" }} />
-        <div className="hf-text">Custom Builds</div>
+        <div className="hf-text">Custom-Built Websites</div>
       </div>
       <div className="hero-float-card hero-float-2">
         <div className="hf-dot" style={{ background: "#22c55e" }} />
-        <div className="hf-text">Speed Optimized</div>
+        <div className="hf-text">Google Maps Ranking</div>
       </div>
       <div className="hero-float-card hero-float-3">
         <div className="hf-dot" style={{ background: "#3b82f6" }} />
-        <div className="hf-text">Results Driven</div>
+        <div className="hf-text">SEO That Converts</div>
       </div>
 
       <div className="hero-center">
         <div ref={eyebrowRef} className="hero-eyebrow">
           <span className="hero-eyebrow-dot" />
-          Brand. Grow. Dominate.
+          Delhi-Based Digital Growth Agency
         </div>
 
         <h1 ref={h1Ref} className="hero-h1">
-          <span className="h1-line">We Build Brands</span>
+          <span className="h1-line">Websites, SEO &</span>
           <span className="h1-line h1-line-2">
-            That <span className="hero-h1-stroke">Actually</span> Work.
+            Growth Systems <span className="hero-h1-stroke">That Convert</span>
           </span>
         </h1>
 
         <p ref={subRef} className="hero-sub">
-          Delhi-based digital growth agency helping businesses across India scale through custom websites, SEO, Google Business Profile optimization, AI automation, and conversion-focused design.
+          KODIT builds high-performance websites, runs search engine optimization campaigns,
+          and manages Google Business Profiles for local businesses across India. Every project
+          is designed to generate leads, not just look good.
         </p>
 
         <div ref={ctaRef} className="hero-ctas">
           <Link href="/contact" className="btn-primary">
             Start a Project
-            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              width="15"
+              height="15"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
           </Link>
@@ -115,10 +214,10 @@ export default function Hero() {
 
         <div ref={statsRef} className="hero-stats">
           {[
-            { n: "100%", l: "Bespoke" },
-            { n: "95%", l: "Satisfaction" },
-            { n: "2+", l: "Yrs Experience" },
-            { n: "6", l: "Core Services" },
+            { n: "30+", l: "Projects Delivered" },
+            { n: "2+", l: "Years in Business" },
+            { n: "80%", l: "Client Retention" },
+            { n: "1.6x", l: "Avg. Client Growth" },
           ].map((s, i) => (
             <div key={i} className="stat-item">
               <span className="stat-num">{s.n}</span>
@@ -126,6 +225,10 @@ export default function Hero() {
             </div>
           ))}
         </div>
+      </div>
+
+      <div className="hero-marquee-wrap">
+        <ServiceMarquee />
       </div>
 
       <style jsx global>{`
@@ -154,16 +257,30 @@ export default function Hero() {
           position: absolute;
           width: 600px;
           height: 600px;
-          background: radial-gradient(circle, rgba(232,77,14,0.12) 0%, transparent 70%);
+          background: radial-gradient(
+            circle,
+            rgba(232, 77, 14, 0.12) 0%,
+            transparent 70%
+          );
           filter: blur(80px);
           pointer-events: none;
         }
-        .hero-glow-1 { top: -200px; left: -200px; }
-        .hero-glow-2 { bottom: -200px; right: -200px; }
+        .hero-glow-1 {
+          top: -200px;
+          left: -200px;
+        }
+        .hero-glow-2 {
+          bottom: -200px;
+          right: -200px;
+        }
         .hero-grid-lines {
           position: absolute;
           inset: 0;
-          background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+          background-image: linear-gradient(
+              rgba(255, 255, 255, 0.03) 1px,
+              transparent 1px
+            ),
+            linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
           background-size: 60px 60px;
           pointer-events: none;
           z-index: 1;
@@ -171,7 +288,10 @@ export default function Hero() {
         .hero-dot-grid {
           position: absolute;
           inset: 0;
-          background-image: radial-gradient(rgba(255,255,255,0.06) 1.5px, transparent 1.5px);
+          background-image: radial-gradient(
+            rgba(255, 255, 255, 0.06) 1.5px,
+            transparent 1.5px
+          );
           background-size: 30px 30px;
           pointer-events: none;
           z-index: 1;
@@ -179,9 +299,9 @@ export default function Hero() {
         }
         .hero-float-card {
           position: absolute;
-          background: rgba(20,20,20,0.6);
+          background: rgba(20, 20, 20, 0.6);
           backdrop-filter: blur(12px);
-          border: 1px solid rgba(255,255,255,0.1);
+          border: 1px solid rgba(255, 255, 255, 0.1);
           border-radius: 12px;
           padding: 12px 20px;
           display: flex;
@@ -189,12 +309,21 @@ export default function Hero() {
           gap: 10px;
           z-index: 3;
           pointer-events: none;
-          box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+          box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
           opacity: 0;
           transform-style: preserve-3d;
           will-change: transform, opacity;
+          transition: box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        .hf-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .hero-float-card:hover {
+          box-shadow: 0 30px 60px rgba(0, 0, 0, 0.7);
+          border-color: rgba(255, 255, 255, 0.2);
+        }
+        .hf-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+        }
         .hf-text {
           font-family: "Space Grotesk", sans-serif;
           font-size: 14px;
@@ -202,9 +331,18 @@ export default function Hero() {
           color: #fff;
           letter-spacing: 0.02em;
         }
-        .hero-float-1 { top: 20%; left: 10%; }
-        .hero-float-2 { top: 50%; right: 8%; }
-        .hero-float-3 { bottom: 25%; left: 15%; }
+        .hero-float-1 {
+          top: 20%;
+          left: 10%;
+        }
+        .hero-float-2 {
+          top: 50%;
+          right: 8%;
+        }
+        .hero-float-3 {
+          bottom: 25%;
+          left: 15%;
+        }
 
         .hero-center {
           position: relative;
@@ -238,8 +376,13 @@ export default function Hero() {
           animation: blink 2s ease-in-out infinite;
         }
         @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50% { opacity: 0.3; }
+          0%,
+          100% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0.3;
+          }
         }
 
         .hero-h1 {
@@ -279,7 +422,7 @@ export default function Hero() {
         .hero-sub {
           font-family: "Inter", sans-serif;
           font-size: clamp(14px, 1.8vw, 17px);
-          color: rgba(255,255,255,0.38);
+          color: rgba(255, 255, 255, 0.38);
           line-height: 1.72;
           max-width: 560px;
           margin-bottom: 32px;
@@ -306,36 +449,38 @@ export default function Hero() {
           display: inline-flex;
           align-items: center;
           gap: 8px;
-          transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+          transition: background 0.25s ease, transform 0.25s ease,
+            box-shadow 0.25s ease;
           opacity: 0;
         }
         .btn-primary:hover {
           background: #f06030;
           transform: translateY(-2px);
-          box-shadow: 0 12px 40px rgba(232,77,14,0.35);
+          box-shadow: 0 12px 40px rgba(232, 77, 14, 0.35);
         }
         .btn-ghost {
           font-family: "Inter", sans-serif;
           font-size: 14px;
           font-weight: 500;
-          color: rgba(255,255,255,0.5);
+          color: rgba(255, 255, 255, 0.5);
           text-decoration: none;
           padding: 13px 28px;
           border-radius: 999px;
-          border: 1px solid rgba(255,255,255,0.1);
-          transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          transition: color 0.2s ease, border-color 0.2s ease,
+            background 0.2s ease;
           opacity: 0;
         }
         .btn-ghost:hover {
           color: #f0ede8;
-          border-color: rgba(255,255,255,0.25);
-          background: rgba(255,255,255,0.04);
+          border-color: rgba(255, 255, 255, 0.25);
+          background: rgba(255, 255, 255, 0.04);
         }
 
         .hero-stats {
           display: flex;
           gap: 0;
-          border: 1px solid rgba(255,255,255,0.07);
+          border: 1px solid rgba(255, 255, 255, 0.07);
           border-radius: 14px;
           overflow: hidden;
           width: 100%;
@@ -348,13 +493,17 @@ export default function Hero() {
           flex-direction: column;
           align-items: center;
           gap: 4px;
-          border-right: 1px solid rgba(255,255,255,0.07);
-          background: rgba(255,255,255,0.02);
+          border-right: 1px solid rgba(255, 255, 255, 0.07);
+          background: rgba(255, 255, 255, 0.02);
           transition: background 0.2s ease;
           opacity: 0;
         }
-        .stat-item:last-child { border-right: none; }
-        .stat-item:hover { background: rgba(255,255,255,0.04); }
+        .stat-item:last-child {
+          border-right: none;
+        }
+        .stat-item:hover {
+          background: rgba(255, 255, 255, 0.04);
+        }
         .stat-num {
           font-family: "Space Grotesk", sans-serif;
           font-size: 22px;
@@ -365,13 +514,42 @@ export default function Hero() {
         .stat-label {
           font-family: "Inter", sans-serif;
           font-size: 10px;
-          color: rgba(255,255,255,0.28);
+          color: rgba(255, 255, 255, 0.28);
           letter-spacing: 0.06em;
           text-align: center;
         }
 
+        .hero-marquee-wrap {
+          width: 100%;
+          margin-top: 60px;
+          position: relative;
+          z-index: 2;
+        }
+        .hero-marquee-wrap .sv-marquee {
+          border-top: 1px solid rgba(255,255,255,0.06);
+          border-bottom: 1px solid rgba(255,255,255,0.06);
+          overflow: hidden;
+          padding: 18px 0;
+        }
+        .hero-marquee-wrap .sv-marquee-inner {
+          display: flex;
+          white-space: nowrap;
+          width: max-content;
+        }
+        .hero-marquee-wrap .sv-marquee-item {
+          font-family: 'Space Grotesk', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          letter-spacing: 0.06em;
+          color: rgba(255,255,255,0.22);
+          padding: 0 24px;
+          text-transform: uppercase;
+        }
+
         @media (max-width: 900px) {
-          .hero-grid-lines { background-size: 80px 80px; }
+          .hero-grid-lines {
+            background-size: 80px 80px;
+          }
         }
         @media (max-width: 600px) {
           .hero-ctas {
@@ -388,7 +566,9 @@ export default function Hero() {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
           }
-          .hero-float-card { display: none; }
+          .hero-float-card {
+            display: none;
+          }
         }
       `}</style>
     </section>

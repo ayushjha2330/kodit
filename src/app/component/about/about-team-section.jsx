@@ -3,10 +3,9 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const team = [
-  { name: "Aryan Sharma",  role: "Founder & Strategy", initials: "AS" },
-  { name: "Priya Mehta",   role: "Lead Designer", initials: "PM" },
-  { name: "Rohan Kapoor",  role: "Dev Lead", initials: "RK" },
-  { name: "Nisha Verma",   role: "SEO Specialist", initials: "NV" },
+  { name: "Ayush Jha",  role: "Founder", initials: "AJ" },
+  { name: "Meshid Ahmed",   role: "Marketing & Management", initials: "MA" },
+  { name: "Nitin",  role: "Social Media Manager", initials: "N" },
 ];
 
 export default function AboutTeamSection() {

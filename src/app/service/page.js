@@ -8,7 +8,6 @@ import Tabs from "../component/service/service-tabs-section";
 import Compare from "../component/service/service-compare-section";
 import Testimonials from "../component/service/service-testimonials-section";
 import List from "../component/service/service-list-section";
-import CTA from "../component/service/service-cta-section";
 import "./service.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -38,7 +37,6 @@ export default function ServicesPage() {
       <Compare />
       <Testimonials />
       <List setActive={setActive} />
-      <CTA />
     </main>
   );
 }

@@ -3,10 +3,10 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const stats = [
-  { num: "25+", label: "Projects Delivered" },
-  { num: "4+",  label: "Years in Delhi Market" },
-  { num: "3.4x", label: "Avg. ROI Improvement" },
-  { num: "95%", label: "Client Retention" },
+  { num: "30+", label: "Projects Delivered" },
+  { num: "2+",  label: "Years in Business" },
+  { num: "1.6x", label: "Avg. Client Growth" },
+  { num: "80%", label: "Client Retention" },
 ];
 
 export default function AboutHeroSection() {
@@ -56,13 +56,15 @@ export default function AboutHeroSection() {
         <div className="au-container">
           <p className="section-eyebrow">Who We Are</p>
           <h1 className="au-title">
-            <span className="au-clip"><span className="au-title-line">We build digital</span></span>
-            <span className="au-clip"><span className="au-title-line accent-italic">machines that grow</span></span>
-            <span className="au-clip"><span className="au-title-line">Delhi businesses.</span></span>
+            <span className="au-clip"><span className="au-title-line">We build digital systems</span></span>
+            <span className="au-clip"><span className="au-title-line accent-italic">that grow Indian</span></span>
+            <span className="au-clip"><span className="au-title-line">businesses.</span></span>
           </h1>
           <p className="au-hero-sub">
-            Kodit Agency is a collective of designers, developers, and search
-            specialists focused on driving real revenue — not vanity metrics.
+            KODIT is a Delhi-based digital agency helping clinics, coaching institutes,
+            salons, restaurants, real estate firms, and startups across India generate
+            qualified leads and measurable revenue through web development, SEO, and
+            integrated marketing.
           </p>
         </div>
 
@@ -72,12 +74,12 @@ export default function AboutHeroSection() {
             <div className="au-fc-dot green" />
             <p className="au-fc-label">Avg. ranking uplift</p>
             <p className="au-fc-big">+4.2</p>
-            <p className="au-fc-sub">positions on Google Maps 3-Pack</p>
+            <p className="au-fc-sub">positions on Google Search</p>
           </div>
           <div className="au-float-card au-float-card-2">
             <div className="au-fc-dot orange" />
             <p className="au-fc-label">Page speed score</p>
-            <p className="au-fc-big">97</p>
+            <p className="au-fc-big">80+</p>
             <p className="au-fc-sub">Lighthouse performance</p>
           </div>
         </div>

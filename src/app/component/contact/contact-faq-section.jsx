@@ -3,11 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 
 const faqs = [
-  { q: "How quickly can you launch my website?", a: "Most custom websites are designed, built, and deployed within 2–3 weeks depending on the scope. We use an agile process with weekly check-ins so you always know what's happening." },
-  { q: "Do you work with businesses outside Delhi?", a: "Yes — we work with clients across India and internationally. Our local Delhi expertise particularly helps with GMB and local SEO campaigns, but our web and design work is location-agnostic." },
-  { q: "What is your pricing model?", a: "We work on project-based fixed quotes, not hourly billing. You get a clear breakdown before we start — no hidden costs, no surprise invoices." },
-  { q: "Will I be able to update the website myself?", a: "Yes. We integrate headless CMS systems (Sanity, Prismic) that make content updates as easy as Google Docs. We also provide a walkthrough video so you're fully confident." },
-  { q: "How long does SEO take to show results?", a: "Typically 60–90 days to see measurable ranking movement, and 4–6 months for significant traffic growth. We share monthly reports so you can track every improvement." },
+  { q: "How quickly can you launch my website?", a: "Most business websites are designed, developed, and launched within 10 to 14 business days. Projects with custom features like booking systems or product catalogues take 3 to 4 weeks. We share a detailed timeline before starting." },
+  { q: "Do you work with businesses outside Delhi?", a: "Yes. While we are based in South Delhi, we serve clients across India — from metros like Mumbai, Bangalore, and Hyderabad to tier-2 and tier-3 cities. Our web development, SEO, design, and social media services are location-agnostic." },
+  { q: "What is your pricing model?", a: "We offer project-based pricing for websites and design work, and monthly retainers for ongoing services like SEO, social media, and GMB management. Pricing depends on scope, industry, and goals. We provide a clear proposal after a free discovery call." },
+  { q: "Will I be able to update the website myself?", a: "Yes. We integrate CMS systems (Sanity, Prismic) that make content updates as straightforward as using Google Docs. We also provide a walkthrough so your team can manage day-to-day changes independently." },
+  { q: "How long does SEO take to show results?", a: "Most clients see measurable ranking improvements within 60 to 90 days. Significant traffic growth typically takes 4 to 6 months. We share monthly reports so you can track every improvement with transparent metrics." },
+  { q: "Are there long-term contracts?", a: "No. We work on monthly rolling agreements for retainer services. You can pause or cancel with 30 days notice. We believe in earning your business every month through performance." },
 ];
 
 function FAQItem({ faq, idx }) {
@@ -65,8 +66,25 @@ export default function ContactFaqSection() {
 
   return (
     <section ref={sectionRef} className="ct-faq ct-container">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            "mainEntity": faqs.map((faq) => ({
+              "@type": "Question",
+              "name": faq.q,
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": faq.a
+              }
+            }))
+          })
+        }}
+      />
       <p className="section-eyebrow">Common Questions</p>
-      <h2 className="ct-faq-title">We&apos;ve answered the obvious ones</h2>
+      <h2 className="ct-faq-title">Frequently Asked Questions</h2>
 
       <div className="ct-faq-list">
         {faqs.map((faq, i) => (

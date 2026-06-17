@@ -3,10 +3,10 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const numbers = [
-  { big: "124%", sub: "Avg. increase in inbound calls" },
-  { big: "0.4s", sub: "Average page load speed" },
-  { big: "540+", sub: "Qualified leads generated" },
-  { big: "Top 3", sub: "Google Maps positions captured" },
+  { big: "30+", sub: "Projects Delivered" },
+  { big: "2.6s", sub: "Avg. Page Load Speed" },
+  { big: "1.6x", sub: "Avg. Client Growth" },
+  { big: "Top 3", sub: "Google Maps Rankings" },
 ];
 
 export default function ProjectsNumbersSection() {

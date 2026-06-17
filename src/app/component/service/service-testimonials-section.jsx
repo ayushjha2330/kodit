@@ -3,9 +3,9 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const testimonials = [
-  { name: "Dr. Arjun Bhatia", role: "Delhi Ortho Center", text: "Our new website loads in 0.3 seconds and inbound calls increased 124%. Best investment for the clinic." },
-  { name: "Meera Gupta", role: "South Ex Bistro", text: "We went from invisible on Google Maps to #1 in 3 months. The review pipeline alone was worth the retainer." },
-  { name: "Vikram Sethi", role: "Dwarka RE Group", text: "540 qualified property leads in 6 months through organic search alone. No paid ads needed." },
+  { name: "Dr. Sharma", role: "Delhi Ortho Center", text: "Kodit rebuilt our clinic website from scratch. It loads fast, looks professional, and new patient inquiries went up significantly within the first month." },
+  { name: "Meera", role: "South Ex Bistro", text: "We were invisible on Google Maps. After working with Kodit, we started showing up in the top 3 for local searches. Our weekend reservations doubled." },
+  { name: "Vikram", role: "Dwarka RE Group", text: "The SEO strategy Kodit built for us started generating qualified property leads within 3 months. Their reporting is transparent and the team is responsive." },
 ];
 
 export default function ServiceTestimonialsSection() {
@@ -27,7 +27,7 @@ export default function ServiceTestimonialsSection() {
   return (
     <section ref={sectionRef} className="sv-testimonials sv-container">
       <p className="section-eyebrow">Client Words</p>
-      <h2 className="sv-section-h2">Don&apos;t take our word for it.</h2>
+      <h2 className="sv-section-h2">Don&apos;t take our word for it. <em>Take theirs.</em></h2>
 
       <div className="sv-test-grid">
         {testimonials.map((t, i) => (

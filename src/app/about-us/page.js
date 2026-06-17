@@ -6,8 +6,7 @@ import Hero from "../component/about/about-hero-section";
 import Story from "../component/about/about-story-section";
 import Values from "../component/about/about-values-section";
 import Timeline from "../component/about/about-timeline-section";
-import Team from "../component/about/about-team-section";
-import CTA from "../component/about/about-cta-section";
+import Team from "../component/home/home-team-section";
 import "./about.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -34,7 +33,6 @@ export default function AboutPage() {
       <Values />
       <Timeline />
       <Team />
-      <CTA />
     </main>
   );
 }

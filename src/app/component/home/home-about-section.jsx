@@ -7,8 +7,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 const highlights = [
   {
-    title: "Performance First Thinking",
-    text: "We tie every initiative to measurable outcomes — more qualified leads, higher search rankings, and stronger brand visibility across Google.",
+    title: "Built for Revenue, Not Awards",
+    text: "Every website, SEO campaign, and design decision we make is tied to a business outcome — more calls, more bookings, more qualified leads.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E84D0E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/>
@@ -16,8 +16,8 @@ const highlights = [
     ),
   },
   {
-    title: "Delhi Market Know How",
-    text: "Deep understanding of Delhi's local economy allows us to position your brand ahead of competitors with far larger budgets.",
+    title: "Delhi Roots, India-Wide Reach",
+    text: "Headquartered in South Delhi, we serve clinics, coaching centres, salons, restaurants, real estate firms, and e-commerce brands across India.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E84D0E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
@@ -26,8 +26,8 @@ const highlights = [
     ),
   },
   {
-    title: "All Under One Roof",
-    text: "Website design, development, SEO, GMB management, and AI automations — all handled by a single team, ensuring seamless execution.",
+    title: "One Team, Six Capabilities",
+    text: "Web development, SEO, Google Business Profile optimization, graphic design, social media marketing, and AI automation — handled under one roof without outsourcing.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E84D0E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -45,9 +45,11 @@ export default function AboutSection() {
   const statsRef = useRef(null);
   const cardsRef = useRef(null);
   const rightRef = useRef(null);
+  const glowRef = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      // -------- Heading text reveal --------
       gsap.fromTo(headRef.current.querySelectorAll(".reveal-line"),
         { y: "100%", opacity: 0 },
         {
@@ -57,6 +59,7 @@ export default function AboutSection() {
         }
       );
 
+      // -------- Stat cards with counter animation --------
       const statCards = statsRef.current.querySelectorAll(".about-stat-card");
       gsap.fromTo(statCards,
         { opacity: 0, y: 48, scale: 0.95 },
@@ -67,6 +70,33 @@ export default function AboutSection() {
         }
       );
 
+      // Counter for stat numbers
+      statCards.forEach((card) => {
+        const numEl = card.querySelector(".about-stat-num");
+        if (!numEl) return;
+        const target = parseFloat(numEl.innerText);
+        if (isNaN(target)) return;
+        const suffix = numEl.innerText.replace(/[\d.]/g, "");
+        gsap.fromTo(numEl,
+          { innerText: 0 },
+          {
+            innerText: target,
+            duration: 2,
+            ease: "power2.out",
+            snap: { innerText: 1 },
+            scrollTrigger: {
+              trigger: card,
+              start: "top 90%",
+              toggleActions: "play none none reset",
+            },
+            onUpdate: () => {
+              numEl.innerText = Math.floor(parseFloat(numEl.innerText)) + suffix;
+            },
+          }
+        );
+      });
+
+      // -------- Highlight cards --------
       const cards = cardsRef.current.querySelectorAll(".hl-card");
       gsap.fromTo(cards,
         { opacity: 0, x: -40 },
@@ -77,6 +107,7 @@ export default function AboutSection() {
         }
       );
 
+      // -------- Dashboard cards (right side) --------
       gsap.fromTo(".abt-dash-card",
         { opacity: 0, y: 30, scale: 0.96 },
         {
@@ -86,6 +117,7 @@ export default function AboutSection() {
         }
       );
 
+      // -------- Bar fills (with staggered delay) --------
       gsap.fromTo(".abt-bar-fill",
         { scaleX: 0 },
         {
@@ -93,6 +125,16 @@ export default function AboutSection() {
           scrollTrigger: { trigger: ".abt-dash-chart", start: "top 85%", toggleActions: "play none none reset" },
         }
       );
+
+      // -------- Background glow parallax --------
+      gsap.to(glowRef.current, {
+        x: 40,
+        y: 20,
+        duration: 6,
+        ease: "sine.inOut",
+        yoyo: true,
+        repeat: -1,
+      });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -100,7 +142,7 @@ export default function AboutSection() {
 
   return (
     <section ref={sectionRef} className="about-root">
-      <div className="about-glow" />
+      <div ref={glowRef} className="about-glow" />
 
       <div className="about-wrap">
         <div ref={headRef} className="about-header">
@@ -109,27 +151,32 @@ export default function AboutSection() {
           </div>
           <div className="overflow-clip-wrap">
             <h2 className="about-h2 reveal-line">
-              We Don&apos;t Just Build Websites.
+              Digital Growth, Not Just
             </h2>
           </div>
           <div className="overflow-clip-wrap">
             <h2 className="about-h2 about-h2-italic reveal-line">
-              <em>We Build Growth Engines.</em>
+              <em>Pretty Websites.</em>
             </h2>
           </div>
           <div className="overflow-clip-wrap">
             <p className="about-desc reveal-line">
-              Kodit is a Delhi based digital growth agency that partners with ambitious clinics, coaching institutes, and service brands across India. We bring together design, development, SEO, GMB optimisation, and AI automation under one roof, helping you build a digital presence that consistently drives leads and revenue.
+              KODIT is a Delhi-based digital agency that works with local businesses
+              across India — clinics, coaching institutes, salons, restaurants, real estate
+              firms, and startups. We combine web development, search engine optimization,
+              Google Business Profile management, graphic design, social media marketing,
+              and paid advertising into a single growth system. The focus is always the same:
+              generate qualified leads and measurable revenue for your business.
             </p>
           </div>
         </div>
 
         <div ref={statsRef} className="about-stats">
           {[
-            { num: "100%", label: "Custom Solutions", sub: "No templates, ever" },
-            { num: "95%", label: "Client Retention", sub: "Built on trust & results" },
-            { num: "2+",  label: "Years Operating", sub: "Serving Delhi & beyond" },
-            { num: "6",   label: "Core Capabilities", sub: "Full stack digital services" },
+            { num: "30+", label: "Projects Delivered", sub: "Across 8+ industries" },
+            { num: "80%", label: "Client Retention", sub: "Built on trust & results" },
+            { num: "2+",  label: "Years in Business", sub: "Founded in South Delhi" },
+            { num: "6",   label: "Core Services", sub: "Web, SEO, GMB, Design, Social, AI" },
           ].map((s, i) => (
             <div key={i} className="about-stat-card">
               <span className="about-stat-num">{s.num}</span>
@@ -154,9 +201,9 @@ export default function AboutSection() {
             {/* Results strip — professional agency KPIs */}
             <div className="abt-result-strip">
               {[
-                { val: "3.2x", lbl: "Organic Reach" },
-                { val: "14 Day", lbl: "Launch Cycle" },
-                { val: "Page 1", lbl: "Rankings Achieved" },
+                { val: "1.6x", lbl: "Avg. Client Growth" },
+                { val: "14 Days", lbl: "Website Launch" },
+                { val: "Page 1", lbl: "Search Rankings" },
               ].map((r, i) => (
                 <div key={i} className="abt-result-item">
                   <span className="abt-result-val">{r.val}</span>
@@ -164,23 +211,23 @@ export default function AboutSection() {
                 </div>
               ))}
             </div>
-          </div>
 
+            </div>
           <div ref={rightRef} className="about-right">
-            {/* Performance dashboard — clean, no live indicator */}
+            {/* Performance dashboard */}
             <div className="abt-dash-card abt-dash-chart">
               <div className="abt-dash-head">
                 <div>
-                  <span className="abt-dash-label">Monthly Performance</span>
-                  <span className="abt-dash-sub">Avg. client growth over 6 months</span>
+                  <span className="abt-dash-label">Client Performance Overview</span>
+                  <span className="abt-dash-sub">Average outcomes across active accounts</span>
                 </div>
               </div>
               <div className="abt-bars">
                 {[
-                  { label: "Organic Traffic", pct: 87, color: "#E84D0E" },
-                  { label: "GMB Visibility", pct: 92, color: "#F06030" },
-                  { label: "Inbound Leads", pct: 74, color: "#fb923c" },
-                  { label: "Page Speed Score", pct: 97, color: "#22c55e" },
+                  { label: "Search Visibility", pct: 78, color: "#E84D0E" },
+                  { label: "Google Maps Presence", pct: 85, color: "#F06030" },
+                  { label: "Lead Conversion Rate", pct: 62, color: "#fb923c" },
+                  { label: "Client Retention", pct: 98, color: "#22c55e" },
                 ].map((b, i) => (
                   <div key={i} className="abt-bar-row">
                     <div className="abt-bar-info">
@@ -195,7 +242,7 @@ export default function AboutSection() {
               </div>
             </div>
 
-            {/* Metric cards — realistic, professional figures */}
+            {/* Metric cards */}
             <div className="abt-dash-card abt-dash-metric">
               <div className="abt-metric-row">
                 <div className="abt-metric-item">
@@ -203,8 +250,8 @@ export default function AboutSection() {
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
                   </span>
                   <div>
-                    <span className="abt-metric-big">+124%</span>
-                    <span className="abt-metric-sub">Traffic Uplift</span>
+                    <span className="abt-metric-big">+85%</span>
+                    <span className="abt-metric-sub">Avg. Search Visibility Increase</span>
                   </div>
                 </div>
                 <div className="abt-metric-divider" />
@@ -214,7 +261,7 @@ export default function AboutSection() {
                   </span>
                   <div>
                     <span className="abt-metric-big">2.6s</span>
-                    <span className="abt-metric-sub">Average Load Time</span>
+                    <span className="abt-metric-sub">Average Page Load</span>
                   </div>
                 </div>
               </div>
@@ -233,8 +280,9 @@ export default function AboutSection() {
           position: absolute; top: 40%; left: 50%;
           transform: translate(-50%, -50%);
           width: 800px; height: 600px;
-          background: radial-gradient(ellipse, rgba(232,77,14,0.045) 0%, transparent 70%);
+          background: radial-gradient(ellipse, rgba(232,77,14,0.06) 0%, transparent 70%);
           pointer-events: none;
+          will-change: transform;
         }
         .about-wrap {
           max-width: 1200px; margin: 0 auto;
@@ -274,10 +322,13 @@ export default function AboutSection() {
         .about-stat-card {
           background: #0C0C0C; padding: 36px 28px;
           display: flex; flex-direction: column; gap: 6px;
-          transition: background 0.3s ease;
+          transition: background 0.3s ease, transform 0.2s ease;
           opacity: 0;
         }
-        .about-stat-card:hover { background: #0f0f0f; }
+        .about-stat-card:hover {
+          background: #0f0f0f;
+          transform: translateY(-2px);
+        }
         .about-stat-num {
           font-family: 'Space Grotesk', sans-serif;
           font-size: clamp(32px, 3.5vw, 48px);
@@ -327,12 +378,13 @@ export default function AboutSection() {
           background: #111; border: 1px solid rgba(255,255,255,0.07);
           border-radius: 14px; padding: 24px;
           display: flex; gap: 16px; align-items: flex-start;
-          transition: border-color 0.25s ease, background 0.25s ease;
+          transition: border-color 0.25s ease, background 0.25s ease, transform 0.2s ease;
           opacity: 0;
         }
         .hl-card:hover {
           border-color: rgba(232,77,14,0.3);
           background: rgba(232,77,14,0.03);
+          transform: translateX(4px);
         }
         .hl-icon {
           width: 40px; height: 40px; flex-shrink: 0;
@@ -354,9 +406,12 @@ export default function AboutSection() {
         .abt-dash-card {
           background: #111; border: 1px solid rgba(255,255,255,0.07);
           border-radius: 16px; padding: 28px;
-          transition: border-color 0.25s ease;
+          transition: border-color 0.25s ease, box-shadow 0.3s ease;
         }
-        .abt-dash-card:hover { border-color: rgba(232,77,14,0.25); }
+        .abt-dash-card:hover {
+          border-color: rgba(232,77,14,0.25);
+          box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+        }
 
         .abt-dash-head {
           display: flex; justify-content: space-between; align-items: flex-start;

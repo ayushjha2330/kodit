@@ -7,12 +7,12 @@ export default function AboutCtaSection() {
       <div className="au-container">
         <div className="au-cta-inner">
           <div className="au-cta-orb" />
-          <h2 className="au-cta-title">Let&apos;s talk about your project</h2>
+          <h2 className="au-cta-title">Ready to grow your business?</h2>
           <p className="au-cta-sub">
-            Get a free digital audit — we analyse your site speed, local SEO
-            visibility and map ranking, then deliver an actionable report.
+            Book a free discovery call. We will review your current digital presence,
+            identify gaps, and outline a strategy to generate more qualified leads.
           </p>
-          <Link href="/contact" className="btn-primary">Claim Free Audit</Link>
+          <Link href="/contact" className="btn-primary">Book Free Discovery Call</Link>
         </div>
       </div>
     </section>

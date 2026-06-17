@@ -4,11 +4,11 @@ import { gsap } from "gsap";
 
 const comparisons = [
   { feature: "Custom strategy per client", us: true, them: false },
-  { feature: "Sub-second page load", us: true, them: false },
-  { feature: "Monthly growth reports", us: true, them: false },
-  { feature: "Hand-coded architecture", us: true, them: false },
-  { feature: "Dedicated account manager", us: true, them: false },
+  { feature: "Transparent monthly reporting", us: true, them: false },
+  { feature: "2.6s avg page load times", us: true, them: false },
+  { feature: "Top 3 on Google Maps", us: true, them: false },
   { feature: "No long-term contracts", us: true, them: false },
+  { feature: "Delhi expertise, pan-India reach", us: true, them: false },
 ];
 
 export default function ServiceCompareSection() {
@@ -30,28 +30,8 @@ export default function ServiceCompareSection() {
   return (
     <section ref={sectionRef} className="sv-compare sv-container">
       <p className="section-eyebrow">Why Us</p>
-      <h2 className="sv-section-h2">Kodit vs <em>typical agencies</em></h2>
+      <h2 className="sv-section-h2">Why choose KODIT <em>over others</em></h2>
 
-      <div className="sv-compare-grid">
-        <div className="sv-comp-col sv-comp-typical">
-          <span className="sv-comp-them">Typical Agency</span>
-          <ul className="sv-comp-list">
-            <li>Slow communication</li>
-            <li>Cookie-cutter templates</li>
-            <li>No clear ROI tracking</li>
-            <li>Outsourced junior work</li>
-          </ul>
-        </div>
-        <div className="sv-comp-col sv-comp-us">
-          <span className="sv-comp-us">Kodit</span>
-          <ul className="sv-comp-list">
-            <li>Direct Slack access</li>
-            <li>Custom coded solutions</li>
-            <li>Data-driven growth metrics</li>
-            <li>In-house expert team</li>
-          </ul>
-        </div>
-      </div>
       <div className="sv-comp-table">
         <div className="sv-comp-header sv-comp-row">
           <span className="sv-comp-feat">Feature</span>

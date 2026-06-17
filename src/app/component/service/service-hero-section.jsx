@@ -32,13 +32,14 @@ export default function ServiceHeroSection() {
 
       <p className="section-eyebrow">Our Capabilities</p>
       <h1 className="sv-title">
-        <span className="au-clip"><span className="sv-title-line">Bespoke digital services</span></span>
-        <span className="au-clip"><span className="sv-title-line">built to convert <em className="accent-italic">prospects</em></span></span>
-        <span className="au-clip"><span className="sv-title-line">into paying customers.</span></span>
+        <span className="au-clip"><span className="sv-title-line">Digital services built</span></span>
+        <span className="au-clip"><span className="sv-title-line">to generate <em className="accent-italic">qualified leads</em></span></span>
+        <span className="au-clip"><span className="sv-title-line">and measurable revenue.</span></span>
       </h1>
       <p className="sv-hero-sub">
-        No standard packages. Customised solutions tailored to your industry,
-        growth goals, and target audience in Delhi NCR.
+        No standard packages. Every engagement starts with understanding your
+        business model, customer journey, and local competition — then building
+        a strategy that fits.
       </p>
     </section>
   );

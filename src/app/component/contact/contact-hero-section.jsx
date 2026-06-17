@@ -32,13 +32,13 @@ export default function ContactHeroSection() {
       <p className="section-eyebrow">Get in Touch</p>
 
       <h1 className="ct-title">
-        <span className="au-clip"><span className="ct-title-line">Let&apos;s build something</span></span>
-        <span className="au-clip"><span className="ct-title-line">that means <em className="accent-italic">business.</em></span></span>
+        <span className="au-clip"><span className="ct-title-line">Let&apos;s discuss your</span></span>
+        <span className="au-clip"><span className="ct-title-line">growth <em className="accent-italic">strategy.</em></span></span>
       </h1>
 
       <p className="ct-hero-sub">
-        Fill out the form below — we typically reply within 4 hours. All initial
-        consultations are free of charge.
+        Book a free discovery call. We will review your current digital presence,
+        identify gaps, and outline a plan to generate more qualified leads.
       </p>
     </section>
   );

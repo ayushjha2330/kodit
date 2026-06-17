@@ -3,10 +3,10 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const values = [
-  { num: "01", title: "Radical Transparency", body: "No hidden costs, no fluff. You see exactly where every rupee goes." },
-  { num: "02", title: "Delhi Market Edge", body: "Local expertise in micro-markets, search intent, and audience language." },
-  { num: "03", title: "Speed as a Weapon", body: "We build, test, and optimise in days — not months." },
-  { num: "04", title: "Design That Commands Trust", body: "Premium aesthetics that signal authority and justify higher pricing." },
+  { num: "01", title: "Radical Transparency", body: "No hidden costs, no inflated metrics, no jargon. You see exactly where every rupee goes and what it produced." },
+  { num: "02", title: "Delhi Roots, India-Wide", body: "Headquartered in South Delhi with deep local market knowledge. We serve businesses across metros, tier-2, and tier-3 cities with strategies adapted to each market." },
+  { num: "03", title: "Speed as a Weapon", body: "Websites go live in under 14 days. SEO audits in 48 hours. We move fast without cutting corners on quality." },
+  { num: "04", title: "Design That Commands Trust", body: "Premium aesthetics that signal authority, build credibility, and justify the pricing your business deserves." },
 ];
 
 export default function AboutValuesSection() {

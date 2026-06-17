@@ -7,41 +7,32 @@ gsap.registerPlugin(ScrollTrigger);
 
 const team = [
   {
-    name: "Aryan Sharma",
-    role: "Founder & Creative Director",
-    bio: "Obsessed with making local businesses look world class. Years turning Delhi brands into digital powerhouses through sharp design and strategy.",
-    initials: "AS",
+    name: "Ayush Jha",
+    role: "Founder",
+    bio: "Leads strategy, brand direction, and client growth initiatives. Ayush founded KODIT to give local businesses enterprise-grade digital execution without the enterprise overhead.",
+    initials: "AJ",
     color: "#E84D0E",
     accentBg: "rgba(232,77,14,0.06)",
     skills: ["Strategy", "Branding", "Web"],
     featured: true,
   },
   {
-    name: "Priya Mehta",
-    role: "Head of SEO & Growth",
-    bio: "Technical SEO and content strategist who consistently lands Page 1 rankings for competitive local keywords across Delhi and beyond.",
-    initials: "PM",
+    name: "Meshid Ahmed",
+    role: "Marketing & Management",
+    bio: "Oversees campaign operations, media strategy, and team workflows. Meshid ensures every project stays on scope, on budget, and on track to deliver measurable growth.",
+    initials: "MA",
     color: "#3b82f6",
     accentBg: "rgba(59,130,246,0.06)",
-    skills: ["SEO", "Content", "Analytics"],
+    skills: ["Marketing", "Management", "Analytics"],
   },
   {
-    name: "Rahul Kapoor",
-    role: "Lead Designer",
-    bio: "Visual storyteller with a sharp eye for brand identity — every pixel has a purpose and a business reason.",
-    initials: "RK",
-    color: "#8b5cf6",
-    accentBg: "rgba(139,92,246,0.06)",
-    skills: ["UI/UX", "Figma", "Motion"],
-  },
-  {
-    name: "Sanya Verma",
-    role: "AI & Automation Lead",
-    bio: "Builds smart n8n workflows, chatbots, and automated lead pipelines that save hours and scale operations without adding headcount.",
-    initials: "SV",
+    name: "Nitin",
+    role: "Social Media Manager",
+    bio: "Manages content strategy and community growth across Instagram, Facebook, LinkedIn, and YouTube. Nitin builds platform-specific content systems that drive engagement and leads.",
+    initials: "N",
     color: "#22c55e",
     accentBg: "rgba(34,197,94,0.06)",
-    skills: ["n8n", "Workflows", "API Integrations"],
+    skills: ["Social Media", "Content", "Community"],
   },
 ];
 
@@ -200,20 +191,26 @@ export default function TeamSection() {
           max-width: 480px; margin-top: 18px; display: block; opacity: 0;
         }
 
-        /* Grid */
+        /* Grid – 3 columns */
         .team-grid {
           display: grid;
-          grid-template-columns: repeat(4, 1fr);
-          gap: 16px; margin-bottom: 40px;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 16px;
+          margin-bottom: 40px;
           perspective: 1000px;
         }
+
         .team-card {
-          background: #111; border: 1px solid rgba(255,255,255,0.07);
-          border-radius: 16px; padding: 28px 22px;
-          display: flex; flex-direction: column;
+          background: #111;
+          border: 1px solid rgba(255,255,255,0.07);
+          border-radius: 16px;
+          padding: 28px 22px;
+          display: flex;
+          flex-direction: column;
           position: relative;
-          transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-          opacity: 0; will-change: transform;
+          transition: border-color 0.3s ease, background 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+          opacity: 0;
+          will-change: transform;
           overflow: hidden;
         }
         .team-card-glow {
@@ -244,10 +241,11 @@ export default function TeamSection() {
           background: rgba(255,255,255,0.03);
           box-shadow: 0 15px 35px rgba(0,0,0,0.4);
           z-index: 5;
+          transform: translateY(-4px);
         }
         .team-card-border {
           position: absolute; bottom: 0; left: 0;
-          height: 2px; width: 0; background: #E84D0E;
+          height: 2px; width: 0;
           transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
         }
         .team-card:hover .team-card-border { width: 100%; }
@@ -288,9 +286,10 @@ export default function TeamSection() {
           font-family: 'Inter', sans-serif;
           font-size: 13px; color: rgba(255,255,255,0.35);
           line-height: 1.68;
+          flex: 1;
         }
         .team-skills {
-          display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px;
+          display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px;
         }
         .team-skill {
           font-family: 'Inter', sans-serif;
@@ -327,6 +326,7 @@ export default function TeamSection() {
         }
         .team-hiring-link:hover { border-color: #E84D0E; }
 
+        /* Responsive */
         @media (max-width: 960px) {
           .team-grid { grid-template-columns: repeat(2, 1fr); }
         }
@@ -334,6 +334,7 @@ export default function TeamSection() {
           .team-root { padding: 80px 0; }
           .team-wrap { padding: 0 20px; }
           .team-grid { grid-template-columns: 1fr; }
+          .team-hiring { width: 100%; justify-content: center; }
         }
       `}</style>
     </section>

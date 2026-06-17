@@ -12,7 +12,7 @@ export default function ProjectsHeroSection() {
         { yPercent: 110, opacity: 0 },
         { yPercent: 0, opacity: 1, duration: 1, stagger: 0.13, ease: "power4.out" }
       );
-      gsap.fromTo(".pj-hero-sub, .pj-hero-stats",
+      gsap.fromTo(".pj-hero-sub",
         { y: 26, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.9, delay: 0.5, stagger: 0.12, ease: "power3.out" }
       );
@@ -33,23 +33,16 @@ export default function ProjectsHeroSection() {
 
       <p className="section-eyebrow">Our Portfolio</p>
       <h1 className="pj-title">
-        <span className="au-clip"><span className="pj-title-line">Selected works built</span></span>
-        <span className="au-clip"><span className="pj-title-line">to drive <em className="accent-italic">real results</em></span></span>
-        <span className="au-clip"><span className="pj-title-line">for Delhi businesses.</span></span>
+        <span className="au-clip"><span className="pj-title-line">Selected projects built</span></span>
+        <span className="au-clip"><span className="pj-title-line">to drive <em className="accent-italic">qualified leads</em></span></span>
+        <span className="au-clip"><span className="pj-title-line">and measurable revenue.</span></span>
       </h1>
       <p className="pj-hero-sub">
-        Every project is a genuine growth partnership — not just a website delivery.
-        Real metrics, real revenue, real impact.
+        Every project starts with a business goal and ends with measurable outcomes.
+        Here are some of the businesses we have helped grow.
       </p>
 
-      {/* Hero stats strip */}
-      <div className="pj-hero-stats">
-        <div className="pj-hs"><span className="pj-hs-num">25+</span><span className="pj-hs-lbl">Projects Shipped</span></div>
-        <div className="pj-hs-divider" />
-        <div className="pj-hs"><span className="pj-hs-num">3.4x</span><span className="pj-hs-lbl">Avg. ROI Boost</span></div>
-        <div className="pj-hs-divider" />
-        <div className="pj-hs"><span className="pj-hs-num">95%</span><span className="pj-hs-lbl">Retention Rate</span></div>
-      </div>
+
     </section>
   );
 }

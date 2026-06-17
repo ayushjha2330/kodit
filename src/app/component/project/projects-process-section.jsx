@@ -3,10 +3,10 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 
 const processSteps = [
-  { num: "01", title: "Discovery", body: "Deep dive into your business, audience, and competitive landscape." },
-  { num: "02", title: "Strategy", body: "Custom growth plan with clear KPIs and timeline milestones." },
-  { num: "03", title: "Execution", body: "Our team builds, optimises, and launches your digital assets." },
-  { num: "04", title: "Growth", body: "Continuous iteration, A/B testing, and performance reporting." },
+  { num: "01", title: "Discovery", body: "We audit your business model, target audience, competitors, and current digital presence to identify growth opportunities." },
+  { num: "02", title: "Strategy", body: "A custom roadmap with clear KPIs, timelines, and milestones — aligned to your revenue goals, not vanity metrics." },
+  { num: "03", title: "Execution", body: "Our team builds, designs, optimizes, and launches your digital assets. Most projects go live within 14 days." },
+  { num: "04", title: "Growth", body: "Continuous iteration, A/B testing, and transparent monthly reporting. We measure success by leads generated, not activity reports." },
 ];
 
 export default function ProjectsProcessSection() {

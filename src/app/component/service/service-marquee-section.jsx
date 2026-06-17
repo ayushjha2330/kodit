@@ -4,9 +4,11 @@ import { gsap } from "gsap";
 
 const services = [
   { title: "Web Development" },
-  { title: "SEO Optimisation" },
-  { title: "GMB Optimisation" },
+  { title: "SEO" },
+  { title: "GMB Optimization" },
   { title: "Graphic Design & Branding" },
+  { title: "Social Media Marketing" },
+  { title: "AI Automation" },
 ];
 
 export default function ServiceMarqueeSection() {

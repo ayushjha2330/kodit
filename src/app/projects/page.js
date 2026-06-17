@@ -4,10 +4,8 @@ import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Hero from "../component/project/projects-hero-section";
 import Grid from "../component/project/projects-grid-section";
-import Numbers from "../component/project/projects-numbers-section";
 import Process from "../component/project/projects-process-section";
 import Marquee from "../component/project/projects-marquee-section";
-import CTA from "../component/project/projects-cta-section";
 import "./projects.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -32,10 +30,8 @@ export default function ProjectsPage() {
       <div className="pj-glow" />
       <Hero />
       <Grid />
-      <Numbers />
       <Process />
       <Marquee />
-      <CTA />
     </main>
   );
 }

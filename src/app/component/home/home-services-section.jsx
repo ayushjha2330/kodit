@@ -16,7 +16,7 @@ const services = [
   },
   {
     id: "02",
-    title: "SEO Optimization",
+    title: "SEO",
     desc: "Rank higher, get found, and dominate search. We build SEO systems that compound over time.",
     tags: ["On Page", "Technical", "Link Building", "Local SEO"],
     color: "#E84D0E",
@@ -30,27 +30,29 @@ const services = [
   },
   {
     id: "04",
-    title: "Graphic Design",
+    title: "Graphic Design & Branding",
     desc: "Brand identity, social media creatives, and marketing collateral that makes your brand impossible to forget.",
     tags: ["Branding", "Social Media", "Print", "Motion"],
     color: "#E84D0E",
   },
   {
     id: "05",
-    title: "AI Automation",
-    desc: "Smart workflows built with n8n that automate your leads, CRM, and daily ops — so your team can focus on growth.",
-    tags: ["n8n", "Workflows", "Chatbots", "API Integration"],
-    color: "#E84D0E",
-  },
-  {
-    id: "06",
-    title: "Social Media",
+    title: "Social Media Marketing",
     desc: "Consistent, creative social presence that builds community, trust, and brand loyalty in your city.",
     tags: ["Instagram", "Content", "Reels", "Strategy"],
     color: "#E84D0E",
   },
+  // ========== REPLACED "Paid Ads" with "AI Automation & Agents" ==========
+  {
+    id: "06",
+    title: "AI Automation & Agents",
+    desc: "Intelligent agents that automate lead nurturing, appointment scheduling, content generation, and customer support — freeing your team for high‑value work.",
+    tags: ["Chatbots", "Workflows", "Zapier", "Custom GPTs"],
+    color: "#E84D0E",
+  },
 ];
 
+// Updated icons – the last one is for AI Automation
 const icons = [
   // Web
   <svg key="web" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>,
@@ -60,10 +62,13 @@ const icons = [
   <svg key="gmb" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>,
   // Design
   <svg key="design" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 8v8M8 12h8"/></svg>,
-  // AI Automation
-  <svg key="automation" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/></svg>,
-  // Social
+  // Social Media
   <svg key="social" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>,
+  // AI Automation – new brain/sparkle icon
+  <svg key="ai" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+    <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/>
+    <circle cx="12" cy="12" r="3"/>
+  </svg>,
 ];
 
 export default function ServicesSection() {
@@ -357,7 +362,6 @@ export default function ServicesSection() {
           font-size: 15px; color: rgba(255,255,255,0.45);
         }
 
-        /* Button styles added so btn-primary always renders */
         .btn-primary {
           font-family: "Inter", sans-serif;
           font-size: 14px;
@@ -371,7 +375,7 @@ export default function ServicesSection() {
           align-items: center;
           gap: 8px;
           transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
-          opacity: 1; /* ensure visible */
+          opacity: 1;
         }
         .btn-primary:hover {
           background: #f06030;
