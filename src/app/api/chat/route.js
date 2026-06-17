@@ -23,7 +23,8 @@ KEY FACTS ABOUT KODIT:
 RULES:
 - Keep answers VERY short — 1 sentence for general questions (like "what services do you offer?"), 2-3 sentences max otherwise.
 - ONLY give detailed/long descriptions when the user explicitly asks for details about a specific service.
-- Use bold for key terms, line breaks between items when listing.
+- Respond in clean plain text only. Do NOT use any markdown symbols, asterisks, bold, italics, dashes, or bullet points.
+- Use simple line breaks for lists, no symbols.
 - Never make up information. If you don't know, say so.`;
 
 export async function POST(request) {

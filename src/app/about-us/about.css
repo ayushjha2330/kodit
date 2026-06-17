@@ -242,14 +242,15 @@
   .au-story-inner { grid-template-columns: 1fr; gap: 48px; }
 }
 @media (max-width: 768px) {
-  .au-hero { padding: 100px 20px 60px; }
+  .au-hero { padding: 150px 0 60px; min-height: 0; }
+  .au-container { padding: 0 20px; }
 }
 @media (max-width: 640px) {
   .au-stats-grid { grid-template-columns: repeat(2, 1fr); }
   .au-stat { border-bottom: 1px solid rgba(255,255,255,0.06); }
   .au-values-grid, .au-team-grid { grid-template-columns: 1fr; }
   .au-ind-grid { grid-template-columns: 1fr; }
-  .au-hero { padding: 90px 20px 60px; }
+  .au-hero { padding: 120px 0 60px; }
   .au-container { padding: 0 20px; }
   .au-cta-inner { padding: 48px 24px; }
 }

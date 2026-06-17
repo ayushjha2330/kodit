@@ -219,10 +219,10 @@
   .ct-trust-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 768px) {
-  .ct-hero { padding: 100px 20px 60px; }
+  .ct-hero.ct-container { padding: 150px 20px 60px; }
 }
 @media (max-width: 640px) {
-  .ct-hero { padding: 90px 20px 60px; }
+  .ct-hero.ct-container { padding: 120px 20px 60px; }
   .ct-container { padding: 0 20px; }
   .ct-grid-section, .ct-faq { padding-left: 20px; padding-right: 20px; }
   .ct-field-row { grid-template-columns: 1fr; }
