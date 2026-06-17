@@ -1,4 +1,7 @@
 import { NextResponse } from "next/server";
+import { chatWithFallback } from "@/lib/api-router";
+
+export const maxDuration = 60;
 
 const SYSTEM_PROMPT = `You are KODIT's AI assistant. You ONLY answer questions about KODIT Agency — a Delhi-based digital agency. If asked anything unrelated, you must politely say you can only help with KODIT-related questions. Never answer anything outside of KODIT Agency details.
 
@@ -31,37 +34,10 @@ export async function POST(request) {
   try {
     const { messages } = await request.json();
 
-    const apiKey = process.env.OPENROUTER_API_KEY;
-    if (!apiKey) {
-      return NextResponse.json({ error: "API key not configured" }, { status: 500 });
-    }
+    const reply = await chatWithFallback(messages, SYSTEM_PROMPT);
 
-    const res = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-        "HTTP-Referer": "https://kodit.agency",
-        "X-Title": "KODIT Agency Chat",
-      },
-      body: JSON.stringify({
-        model: "openai/gpt-4o-mini",
-        messages: [
-          { role: "system", content: SYSTEM_PROMPT },
-          ...messages,
-        ],
-        max_tokens: 300,
-        temperature: 0.5,
-      }),
-    });
-
-    const data = await res.json();
-    if (!res.ok) {
-      return NextResponse.json({ error: data.error?.message || "OpenRouter error" }, { status: res.status });
-    }
-
-    return NextResponse.json({ reply: data.choices[0].message.content });
+    return NextResponse.json({ reply });
   } catch (err) {
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

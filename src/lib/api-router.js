@@ -103,7 +103,7 @@ export async function chatWithFallback(messages, systemPrompt) {
 
     try {
       const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 15000);
+      const timeout = setTimeout(() => controller.abort(), 8000);
 
       const res = await fetch(provider.url, {
         method: "POST",
