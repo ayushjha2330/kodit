@@ -86,8 +86,11 @@
   .sv-panel-grid { grid-template-columns: 1fr; gap: 36px; }
   .sv-test-grid { grid-template-columns: 1fr; }
 }
+@media (max-width: 768px) {
+  .sv-hero { padding: 100px 20px 60px; }
+}
 @media (max-width: 640px) {
-  .sv-hero { padding: 120px 20px 60px; }
+  .sv-hero { padding: 90px 20px 60px; }
   .sv-container { padding: 0 20px; }
   .sv-row { grid-template-columns: 44px 1fr 24px; }
   .sv-row-tag { display: none; }

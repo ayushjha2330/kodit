@@ -310,8 +310,11 @@
   .pj-step { border-left: none; padding: 0; }
   .pj-counter { border-right: none; padding: 0; }
 }
+@media (max-width: 768px) {
+  .pj-hero { padding: 100px 20px 40px; }
+}
 @media (max-width: 640px) {
-  .pj-hero { padding: 120px 20px 40px; }
+  .pj-hero { padding: 90px 20px 40px; }
   .pj-container { padding: 0 20px; }
   .pj-grid-section { padding: 40px 20px 40px; }
   .pj-hero-stats { flex-direction: column; align-items: flex-start; gap: 16px; }

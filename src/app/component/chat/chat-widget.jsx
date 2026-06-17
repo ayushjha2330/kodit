@@ -49,13 +49,6 @@ export default function ChatWidget() {
 
   return (
     <>
-      {/* Desktop-only styles */}
-      <style jsx global>{`
-        @media (max-width: 1023px) {
-          .chat-root { display: none !important; }
-        }
-      `}</style>
-
       <div className="chat-root">
         {/* Bubble button */}
         {!open && (
@@ -314,6 +307,34 @@ export default function ChatWidget() {
         }
         .chat-send:not(:disabled):hover {
           opacity: 0.9;
+        }
+
+        @media (max-width: 768px) {
+          .chat-root {
+            bottom: 16px;
+            right: 16px;
+          }
+          .chat-btn {
+            width: 56px;
+            height: 56px;
+          }
+          .chat-btn img {
+            width: 36px !important;
+            height: 36px !important;
+          }
+          .chat-window {
+            width: calc(100vw - 32px);
+            max-width: 380px;
+            height: 460px;
+            right: 0;
+            bottom: 0;
+          }
+        }
+        @media (max-width: 480px) {
+          .chat-window {
+            width: calc(100vw - 24px);
+            height: 420px;
+          }
         }
       `}</style>
     </>
