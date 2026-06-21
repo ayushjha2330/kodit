@@ -60,8 +60,18 @@ export const metadata = {
   },
   manifest: '/site.webmanifest',
   icons: {
-    icon: '/icon.png',
-    apple: '/icon.png',
+    icon: [
+      { url: '/icon.png', type: 'image/png', sizes: '32x32' },
+      { url: '/icon.png', type: 'image/png', sizes: '192x192' },
+      { url: '/icon.png', type: 'image/png', sizes: '512x512' },
+    ],
+    apple: [
+      { url: '/icon.png', type: 'image/png', sizes: '180x180' },
+    ],
+    shortcut: '/icon.png',
+    other: [
+      { rel: 'mask-icon', url: '/icon.png', color: '#E84D0E' },
+    ],
   },
 };
 
@@ -262,11 +272,17 @@ export default function RootLayout({ children }) {
     <html lang="en" className="h-full antialiased">
       <head>
         <link
-          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap"
+          href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=Inter:ital,opsz,wght@0,14..32,300;0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap"
           rel="stylesheet"
         />
+        <link rel="icon" type="image/png" href="/icon.png" sizes="32x32" />
+        <link rel="icon" type="image/png" href="/icon.png" sizes="192x192" />
+        <link rel="apple-touch-icon" href="/icon.png" sizes="180x180" />
+        <link rel="shortcut icon" href="/icon.png" />
         <link rel="manifest" href="/site.webmanifest" />
         <meta name="theme-color" content="#E84D0E" />
+        <meta name="msapplication-TileColor" content="#E84D0E" />
+        <meta name="msapplication-TileImage" content="/icon.png" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(siteSchema) }}
