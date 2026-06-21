@@ -11,6 +11,15 @@ const navLinks = [
   { label: "Contact", href: "/contact" },
 ];
 
+const serviceLinks = [
+  { label: "Web Development", href: "/service/web-development" },
+  { label: "SEO", href: "/service/seo" },
+  { label: "GMB Optimization", href: "/service/gmb-optimization" },
+  { label: "Graphic Design", href: "/service/graphic-design" },
+  { label: "Social Media Marketing", href: "/service/social-media-marketing" },
+  { label: "AI Automation", href: "/service/ai-automation" },
+];
+
 const mobileSocials = [
   {
     label: "Instagram",
@@ -84,6 +93,26 @@ export default function Header() {
         <nav className="pill-nav desktop-nav">
           {navLinks.map((link) => {
             const isActive = pathname === link.href;
+            if (link.label === "Services") {
+              return (
+                <div key={link.href} className="pill-dropdown-container">
+                  <Link
+                    href={link.href}
+                    className={`pill-link ${isActive || pathname.startsWith("/service/") ? "pill-link-active" : ""}`}
+                  >
+                    {(isActive || pathname.startsWith("/service/")) && <span className="pill-active-dot" />}
+                    {link.label}
+                  </Link>
+                  <div className="pill-dropdown-menu">
+                    {serviceLinks.map((sub) => (
+                      <Link key={sub.href} href={sub.href} className="pill-dropdown-item">
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
             return (
               <Link
                 key={link.href}
@@ -120,6 +149,32 @@ export default function Header() {
         <div className="mobile-nav-links">
           {navLinks.map((link, i) => {
             const isActive = pathname === link.href;
+            if (link.label === "Services") {
+              return (
+                <div key={link.href} className="mobile-services-group">
+                  <Link
+                    href={link.href}
+                    className={`mobile-link ${isActive || pathname.startsWith("/service/") ? "mobile-link-active" : ""}`}
+                    style={{ animationDelay: `${i * 60}ms` }}
+                  >
+                    <span className="mobile-link-num">0{i + 1}</span>
+                    {link.label}
+                  </Link>
+                  <div className="mobile-sub-links">
+                    {serviceLinks.map((sub, j) => (
+                      <Link
+                        key={sub.href}
+                        href={sub.href}
+                        className="mobile-sub-link"
+                        style={{ animationDelay: `${(i + j + 1) * 40}ms` }}
+                      >
+                        {sub.label}
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+              );
+            }
             return (
               <Link
                 key={link.href}
@@ -235,6 +290,87 @@ export default function Header() {
           position: absolute; bottom: 2px; left: 50%;
           transform: translateX(-50%);
           box-shadow: 0 0 6px rgba(232,77,14,0.5);
+        }
+        .pill-dropdown-container {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+        .pill-dropdown-menu {
+          position: absolute;
+          top: 100%;
+          left: 50%;
+          transform: translateX(-50%) translateY(10px);
+          background: rgba(10, 10, 10, 0.95);
+          border: 1px solid rgba(255, 255, 255, 0.08);
+          border-radius: 12px;
+          padding: 8px;
+          display: flex;
+          flex-direction: column;
+          gap: 2px;
+          min-width: 220px;
+          opacity: 0;
+          pointer-events: none;
+          transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+          box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+          z-index: 100;
+          backdrop-filter: blur(16px);
+        }
+        .pill-dropdown-menu::before {
+          content: '';
+          position: absolute;
+          top: -16px;
+          left: 0;
+          right: 0;
+          height: 16px;
+          background: transparent;
+        }
+        .pill-dropdown-container:hover .pill-dropdown-menu,
+        .pill-dropdown-menu:hover {
+          opacity: 1;
+          pointer-events: all;
+          transform: translateX(-50%) translateY(5px);
+        }
+        .pill-dropdown-item {
+          font-family: 'Inter', sans-serif;
+          font-size: 13px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.6);
+          text-decoration: none;
+          padding: 8px 16px;
+          border-radius: 8px;
+          transition: all 0.2s ease;
+          display: flex;
+          align-items: center;
+          white-space: nowrap;
+        }
+        .pill-dropdown-item:hover {
+          color: #fff;
+          background: rgba(255, 255, 255, 0.05);
+        }
+        .mobile-services-group {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+        .mobile-sub-links {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+          margin-top: 12px;
+          margin-bottom: 12px;
+          align-items: center;
+        }
+        .mobile-sub-link {
+          font-size: 16px;
+          color: rgba(255, 255, 255, 0.45);
+          text-decoration: none;
+          font-family: 'Space Grotesk', sans-serif;
+          font-weight: 500;
+          transition: color 0.2s;
+        }
+        .mobile-sub-link:hover {
+          color: #E84D0E;
         }
         .header-right { display: flex; align-items: center; gap: 12px; }
         .header-cta {

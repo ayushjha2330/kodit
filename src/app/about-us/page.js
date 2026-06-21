@@ -1,38 +1,33 @@
-"use client";
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Hero from "../component/about/about-hero-section";
-import Story from "../component/about/about-story-section";
-import Values from "../component/about/about-values-section";
-import Timeline from "../component/about/about-timeline-section";
-import Team from "../component/home/home-team-section";
-import "./about.css";
+import AboutClient from "./AboutClient";
 
-gsap.registerPlugin(ScrollTrigger);
+export const metadata = {
+  title: "About Us | KODIT Agency",
+  description: "Learn about KODIT Agency, New Delhi's premier digital marketing & custom web development company. Meet our team, understand our values, and trace our journey of delivering MERN stack websites, SEO results, and AI automations since 2026.",
+  keywords: [
+    "About KODIT Agency",
+    "digital agency team Delhi",
+    "web developers New Delhi",
+    "MERN stack development history Delhi",
+    "KODIT Agency founders",
+    "Delhi SEO experts team"
+  ],
+  alternates: {
+    canonical: "https://kodit.agency/about-us",
+  },
+  openGraph: {
+    title: "About Us | KODIT Agency — New Delhi's Digital Experts",
+    description: "Learn about our journey, core values, and dedicated team delivering custom MERN stack websites, Local SEO, and AI workflow automations since 2026.",
+    url: "https://kodit.agency/about-us",
+    images: [{ url: "https://kodit.agency/og-image.png", width: 1200, height: 630, alt: "About KODIT Agency" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | KODIT Agency — New Delhi's Digital Experts",
+    description: "Learn about our journey, core values, and dedicated team delivering custom MERN stack websites, Local SEO, and AI workflow automations since 2026.",
+    images: ["https://kodit.agency/og-image.png"],
+  }
+};
 
 export default function AboutPage() {
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      /* Parallax */
-      gsap.to(".au-glow", {
-        y: -60, ease: "none",
-        scrollTrigger: { trigger: rootRef.current, start: "top top", end: "bottom top", scrub: true },
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <main ref={rootRef} className="au-root">
-      <Hero />
-      <Story />
-      <Values />
-      <Timeline />
-      <Team />
-    </main>
-  );
+  return <AboutClient />;
 }

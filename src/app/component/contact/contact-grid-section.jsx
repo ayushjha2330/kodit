@@ -64,8 +64,8 @@ export default function ContactGridSection() {
         <div className="ct-info">
           <div className="ct-info-block">
             <span className="ct-info-label">Email</span>
-            <a href="mailto:hello@kodit.agency" className="ct-info-big">
-              hello@kodit.agency
+            <a href="mailto:koditagency@gmail.com" className="ct-info-big">
+              koditagency@gmail.com
             </a>
           </div>
           <div className="ct-info-block">
@@ -77,7 +77,7 @@ export default function ContactGridSection() {
           </div>
           <div className="ct-info-block">
             <span className="ct-info-label">Location</span>
-            <span className="ct-info-text">South Extension II,<br />New Delhi – 110049</span>
+            <span className="ct-info-text">Jahangirpuri,<br />New Delhi – 110033</span>
           </div>
           <div className="ct-info-block">
             <span className="ct-info-label">Availability</span>

@@ -1,37 +1,34 @@
-"use client";
-import { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Hero from "../component/contact/contact-hero-section";
-import Grid from "../component/contact/contact-grid-section";
-import Trust from "../component/contact/contact-trust-section";
-import FAQ from "../component/contact/contact-faq-section";
-import "./contact.css";
+import ContactClient from "./ContactClient";
 
-gsap.registerPlugin(ScrollTrigger);
+export const metadata = {
+  title: "Contact Us | KODIT Agency",
+  description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development (React, Next.js, MERN), local SEO, GBP optimization, graphic design, social media marketing, and AI automation. Schedule a consultation or visit us.",
+  keywords: [
+    "Contact KODIT Agency",
+    "digital marketing consultation Delhi",
+    "hire web developers Delhi NCR",
+    "hire SEO experts Delhi",
+    "KODIT Agency phone number",
+    "KODIT Agency email address",
+    "KODIT Agency New Delhi office"
+  ],
+  alternates: {
+    canonical: "https://kodit.agency/contact",
+  },
+  openGraph: {
+    title: "Contact Us | KODIT Agency — New Delhi's Digital Experts",
+    description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development, local SEO, GBP optimization, and AI automation. Start your digital journey today.",
+    url: "https://kodit.agency/contact",
+    images: [{ url: "https://kodit.agency/og-image.png", width: 1200, height: 630, alt: "Contact KODIT Agency" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Contact Us | KODIT Agency — New Delhi's Digital Experts",
+    description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development, local SEO, GBP optimization, and AI automation. Start your digital journey today.",
+    images: ["https://kodit.agency/og-image.png"],
+  }
+};
 
 export default function ContactPage() {
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      /* Glow parallax */
-      gsap.to(".ct-glow", {
-        y: -80, ease: "none",
-        scrollTrigger: { trigger: rootRef.current, start: "top top", end: "bottom top", scrub: true },
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <main ref={rootRef} className="ct-root">
-      <div className="ct-glow" />
-      <Hero />
-      <Grid />
-      <Trust />
-      <FAQ />
-    </main>
-  );
+  return <ContactClient />;
 }

@@ -6,8 +6,8 @@ export const maxDuration = 60;
 const SYSTEM_PROMPT = `You are KODIT's AI assistant. You ONLY answer questions about KODIT Agency — a Delhi-based digital agency. If asked anything unrelated, you must politely say you can only help with KODIT-related questions. Never answer anything outside of KODIT Agency details.
 
 KEY FACTS ABOUT KODIT:
-- Based in South Delhi, serves clients across India
-- Founded in 2020, 2+ years in business
+- Based in New Delhi, Jahangirpuri, serves clients across India
+- Founded in 2026
 - 30+ projects delivered, 80% client retention, 1.6x avg client growth
 - 6 core services: Web Development, SEO, Google Business Profile Optimization, Graphic Design, Social Media Marketing, AI Automation
 - Web Development: Next.js/React, 14-day delivery, 2.6s avg load times
@@ -20,7 +20,7 @@ KEY FACTS ABOUT KODIT:
 - Pricing: project-based for websites/design, monthly retainers for SEO/Social/GMB
 - No long-term contracts: rolling monthly agreements, 30-day cancellation
 - Team: Ayush Jha (Founder), Meshid Ahmed (Marketing & Management), Nitin (Social Media Manager)
-- Contact: hello@kodit.agency, +917428276525
+- Contact: koditagency@gmail.com, +917428276525
 - Support: 4-hour average response time
 
 RULES:
@@ -38,6 +38,7 @@ export async function POST(request) {
 
     return NextResponse.json({ reply });
   } catch (err) {
+    console.error("[Chat API Error]:", err);
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }

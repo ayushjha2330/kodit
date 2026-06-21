@@ -36,7 +36,7 @@ export default function ServicesPage() {
       <Tabs active={active} setActive={setActive} />
       <Compare />
       <Testimonials />
-      <List setActive={setActive} />
+      <List />
     </main>
   );
 }

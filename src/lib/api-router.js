@@ -75,7 +75,10 @@ const PROVIDERS = [
     key: () => process.env.GEMINI_API_KEY,
     url: "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
     model: "gemini-2.0-flash",
-    headers: () => ({ "Content-Type": "application/json" }),
+    headers: (key) => ({
+      "Content-Type": "application/json",
+      "x-goog-api-key": key,
+    }),
     transformBody: (messages, systemPrompt) => {
       const contents = [{ role: "user", parts: [{ text: systemPrompt }] }];
       for (const msg of messages) {
@@ -98,10 +101,12 @@ export async function chatWithFallback(messages, systemPrompt) {
     const apiKey = provider.key();
     if (!apiKey) {
       errors.push(`${provider.name}: API key not configured`);
+      console.log(`[Chat API] ${provider.name} skipped: API key not configured`);
       continue;
     }
 
     try {
+      console.log(`[Chat API] Trying provider: ${provider.name}...`);
       const controller = new AbortController();
       const timeout = setTimeout(() => controller.abort(), 8000);
 
@@ -116,18 +121,23 @@ export async function chatWithFallback(messages, systemPrompt) {
 
       if (!res.ok) {
         const errBody = await res.text();
-        errors.push(`${provider.name}: HTTP ${res.status} - ${errBody.slice(0, 200)}`);
+        const errMsg = `${provider.name}: HTTP ${res.status} - ${errBody.slice(0, 200)}`;
+        errors.push(errMsg);
+        console.error(`[Chat API] ${provider.name} failed:`, errMsg);
         continue;
       }
 
       const reply = await provider.parseResponse(res);
       if (reply) {
+        console.log(`[Chat API] Successfully got reply from ${provider.name}`);
         return reply;
       }
 
       errors.push(`${provider.name}: empty response`);
+      console.error(`[Chat API] ${provider.name} returned empty response`);
     } catch (err) {
       errors.push(`${provider.name}: ${err.message}`);
+      console.error(`[Chat API] ${provider.name} error:`, err.message);
     }
   }
 

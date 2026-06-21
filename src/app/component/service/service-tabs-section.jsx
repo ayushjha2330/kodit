@@ -10,7 +10,7 @@ const services = [
     tagline: "Fast, conversion-focused websites",
     body: "No WordPress bloat, no generic templates. Every website is hand-crafted using Next.js and React, built to load in under a second, rank on Google, and convert visitors into leads. Most projects go live within 14 days.",
     deliverables: ["2.6s avg page load times", "Fully responsive custom UI/UX", "SEO-ready architecture from day one", "CMS integration (Sanity / Prismic)", "Hosting, domain, and SSL setup"],
-    stack: ["Next.js", "React", "GSAP", "Tailwind", "Vercel"],
+    stack: ["HTML5", "CSS3", "JavaScript", "React", "Next.js", "Tailwind CSS", "Bootstrap", "Node.js", "Express.js", "MongoDB", "GSAP", "Stitch", "Vercel"],
   },
   {
     id: "seo", num: "02",
@@ -34,7 +34,7 @@ const services = [
     tagline: "Visual authority that builds trust",
     body: "Your visual identity shapes how customers perceive your business before they read a single word. We design logos, brand guidelines, social media templates, marketing materials, and pitch decks that signal professionalism and justify premium pricing.",
     deliverables: ["Logo and brand mark design", "Typography and color system", "Social media template kit", "Pitch deck and brochure layout", "Complete brand style guide"],
-    stack: ["Figma", "Illustrator", "Photoshop", "After Effects"],
+    stack: ["Stitch", "Illustrator", "Photoshop", "After Effects"],
   },
   {
     id: "social", num: "05",

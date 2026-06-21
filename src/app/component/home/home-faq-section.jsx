@@ -12,7 +12,7 @@ const faqs = [
   },
   {
     q: "Does KODIT work with businesses outside Delhi?",
-    a: "Yes. While we are based in South Delhi, we serve clients across India — from metros like Mumbai, Bangalore, and Hyderabad to tier-2 and tier-3 cities. Our web development, SEO, design, and social media services are location-agnostic. For GMB and local SEO, our Delhi expertise gives us a framework that we adapt to any city.",
+    a: "Yes. While we are based in New Delhi (Jahangirpuri), we serve clients across India — from metros like Mumbai, Bangalore, and Hyderabad to tier-2 and tier-3 cities. Our web development, SEO, design, and social media services are location-agnostic. For GMB and local SEO, our Delhi expertise gives us a framework that we adapt to any city.",
   },
   {
     q: "What makes KODIT's SEO different from other agencies?",
@@ -144,7 +144,7 @@ export default function FAQSection() {
               </p>
             </div>
             <div className="clip-row faq-reveal">
-              <a href="mailto:hello@kodit.agency" className="faq-contact-link">
+              <a href="mailto:koditagency@gmail.com" className="faq-contact-link">
                 Ask us directly
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
               </a>

@@ -4,7 +4,7 @@ import { gsap } from "gsap";
 
 const faqs = [
   { q: "How quickly can you launch my website?", a: "Most business websites are designed, developed, and launched within 10 to 14 business days. Projects with custom features like booking systems or product catalogues take 3 to 4 weeks. We share a detailed timeline before starting." },
-  { q: "Do you work with businesses outside Delhi?", a: "Yes. While we are based in South Delhi, we serve clients across India — from metros like Mumbai, Bangalore, and Hyderabad to tier-2 and tier-3 cities. Our web development, SEO, design, and social media services are location-agnostic." },
+  { q: "Do you work with businesses outside Delhi?", a: "Yes. While we are based in New Delhi (Jahangirpuri), we serve clients across India — from metros like Mumbai, Bangalore, and Hyderabad to tier-2 and tier-3 cities. Our web development, SEO, design, and social media services are location-agnostic." },
   { q: "What is your pricing model?", a: "We offer project-based pricing for websites and design work, and monthly retainers for ongoing services like SEO, social media, and GMB management. Pricing depends on scope, industry, and goals. We provide a clear proposal after a free discovery call." },
   { q: "Will I be able to update the website myself?", a: "Yes. We integrate CMS systems (Sanity, Prismic) that make content updates as straightforward as using Google Docs. We also provide a walkthrough so your team can manage day-to-day changes independently." },
   { q: "How long does SEO take to show results?", a: "Most clients see measurable ranking improvements within 60 to 90 days. Significant traffic growth typically takes 4 to 6 months. We share monthly reports so you can track every improvement with transparent metrics." },

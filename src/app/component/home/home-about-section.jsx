@@ -17,7 +17,7 @@ const highlights = [
   },
   {
     title: "Delhi Roots, India-Wide Reach",
-    text: "Headquartered in South Delhi, we serve clinics, coaching centres, salons, restaurants, real estate firms, and e-commerce brands across India.",
+    text: "Headquartered in New Delhi, we serve clinics, coaching centres, salons, restaurants, real estate firms, and e-commerce brands across India.",
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E84D0E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/>
@@ -175,7 +175,7 @@ export default function AboutSection() {
           {[
             { num: "30+", label: "Projects Delivered", sub: "Across 8+ industries" },
             { num: "80%", label: "Client Retention", sub: "Built on trust & results" },
-            { num: "2+",  label: "Years in Business", sub: "Founded in South Delhi" },
+            { num: "2+",  label: "Years in Business", sub: "Founded in New Delhi" },
             { num: "6",   label: "Core Services", sub: "Web, SEO, GMB, Design, Social, AI" },
           ].map((s, i) => (
             <div key={i} className="about-stat-card">

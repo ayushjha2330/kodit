@@ -32,7 +32,7 @@ export default function AboutStorySection() {
             Built for businesses that want <em>real growth, not retainer fees.</em>
           </h2>
           <p className="au-body-text">
-            KODIT was founded in South Delhi to solve a specific problem: local
+            KODIT was founded in New Delhi to solve a specific problem: local
             businesses were either stuck with generic template websites from
             freelancers or paying enterprise prices for agencies that treated
             them as small accounts. We built an agency that delivers enterprise-grade
@@ -68,8 +68,8 @@ export default function AboutStorySection() {
             <p className="cl ind"><span className="ckey">speed</span>: <span className="cstr">&quot;14-Day Website Launch&quot;</span>,</p>
             <p className="cl ind"><span className="ckey">seo</span>: <span className="cstr">&quot;Local Pack Dominance&quot;</span>,</p>
             <p className="cl ind"><span className="ckey">clients</span>: <span className="cstr">&quot;Pan-India&quot;</span>,</p>
-            <p className="cl ind"><span className="ckey">founded</span>: <span className="cnum">2020</span>,</p>
-            <p className="cl ind"><span className="ckey">hq</span>: <span className="cstr">&quot;South Delhi&quot;</span></p>
+            <p className="cl ind"><span className="ckey">founded</span>: <span className="cnum">2026</span>,</p>
+            <p className="cl ind"><span className="ckey">hq</span>: <span className="cstr">&quot;Jahangirpuri, New Delhi&quot;</span></p>
             <p className="cl">{"}"}</p>
           </div>
         </div>

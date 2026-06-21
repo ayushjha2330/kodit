@@ -165,7 +165,7 @@ export default function WhyUsSection() {
             {
               num: "03",
               title: "Delhi Roots, India-Wide",
-              text: "Headquartered in South Delhi, we serve businesses across metros, tier-2, and tier-3 cities with strategies built for each market.",
+              text: "Headquartered in New Delhi, we serve businesses across metros, tier-2, and tier-3 cities with strategies built for each market.",
             },
             {
               num: "04",

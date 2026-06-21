@@ -5,7 +5,8 @@ export const metadata = {
   keywords: [
     "KODIT agency portfolio", "web development projects Delhi", "SEO portfolio India",
     "Delhi web design portfolio", "digital agency projects", "website design examples Delhi",
-    "SEO case studies India"
+    "SEO case studies India", "MERN stack projects", "React Next.js portfolio Delhi",
+    "HTML CSS JS website examples", "Bootstrap website portfolio"
   ],
   openGraph: {
     title: "Portfolio — Web Development, SEO & Design Projects | KODIT Agency Delhi",

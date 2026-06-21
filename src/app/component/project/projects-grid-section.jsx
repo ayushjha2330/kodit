@@ -4,14 +4,14 @@ import Image from "next/image";
 import { gsap } from "gsap";
 
 const projects = [
-  { title: "Godsend Tortoise", desc: "Ecommerce website for premium wallets, gift packs, and accessories.", tags: ["WordPress", "WooCommerce"], year: "2024", img: "/project/1.avif" },
-  { title: "RS Skin & Hair Transplant", desc: "Clinic website for skin care and hair transplant services with consultation booking.", tags: ["HTML", "CSS", "JS"], year: "2024", img: "/project/2.avif" },
-  { title: "Rastra24", desc: "News portal with real-time article publishing, category management, and editorial workflow.", tags: ["HTML", "CSS", "JS"], year: "2024", img: "/project/3.avif" },
-  { title: "Suryansh Foundation Trust", desc: "Trust website for donation management, campaign showcases, and beneficiary stories.", tags: ["HTML", "CSS", "JS"], year: "2024", img: "/project/4.avif" },
-  { title: "Fragrance XO", desc: "Brand website for premium fragrances with product catalog and inquiry system.", tags: ["HTML", "CSS", "JS"], year: "2024", img: "/project/5.avif" },
+  { title: "Godsend Tortoise", desc: "Ecommerce website for premium wallets, gift packs, and accessories.", tags: ["WordPress", "WooCommerce"], year: "2026", img: "/project/1.avif" },
+  { title: "RS Skin & Hair Transplant", desc: "Clinic website for skin care and hair transplant services with consultation booking.", tags: ["HTML", "CSS", "JS"], year: "2026", img: "/project/2.avif" },
+  { title: "Rastra24", desc: "News portal with real-time article publishing, category management, and editorial workflow.", tags: ["HTML", "CSS", "JS"], year: "2026", img: "/project/3.avif" },
+  { title: "Suryansh Foundation Trust", desc: "Trust website for donation management, campaign showcases, and beneficiary stories.", tags: ["HTML", "CSS", "JS"], year: "2026", img: "/project/4.avif" },
+  { title: "Fragrance XO", desc: "Brand website for premium fragrances with product catalog and inquiry system.", tags: ["HTML", "CSS", "JS"], year: "2026", img: "/project/5.avif" },
   { title: "Meducare", desc: "Hospital website with department pages, doctor profiles, and appointment booking.", tags: ["HTML", "CSS", "JS"], year: "2023", img: "/project/6.avif" },
   { title: "IHR (International Human Rights)", desc: "Human rights organization website for case reporting, resources, and awareness campaigns.", tags: ["WordPress", "Custom Theme"], year: "2023", img: "/project/7.avif" },
-  { title: "Mourtary", desc: "Ecommerce website for curated products with shopping cart and payment integration.", tags: ["HTML", "CSS", "JS"], year: "2024", img: "/project/8.avif" },
+  { title: "Mourtary", desc: "Ecommerce website for curated products with shopping cart and payment integration.", tags: ["HTML", "CSS", "JS"], year: "2026", img: "/project/8.avif" },
 ];
 
 function ProjectCard({ project: p }) {

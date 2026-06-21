@@ -12,12 +12,12 @@ const pages = [
 ];
 
 const services = [
-  { label: "Web Development", href: "/service" },
-  { label: "SEO", href: "/service" },
-  { label: "GMB Optimization", href: "/service" },
-  { label: "Graphic Design & Branding", href: "/service" },
-  { label: "Social Media Marketing", href: "/service" },
-  { label: "AI Automation", href: "/service" },
+  { label: "Web Development", href: "/service/web-development" },
+  { label: "SEO", href: "/service/seo" },
+  { label: "GMB Optimization", href: "/service/gmb-optimization" },
+  { label: "Graphic Design & Branding", href: "/service/graphic-design" },
+  { label: "Social Media Marketing", href: "/service/social-media-marketing" },
+  { label: "AI Automation", href: "/service/ai-automation" },
 ];
 
 const socials = [
@@ -162,13 +162,13 @@ export default function Footer() {
             <h4 className="footer-col-head">Contact</h4>
             <ul className="footer-link-list">
               <li>
-                <a href="mailto:hello@kodit.agency" className="footer-link">hello@kodit.agency</a>
+                <a href="mailto:koditagency@gmail.com" className="footer-link">koditagency@gmail.com</a>
               </li>
               <li>
                 <a href="tel:+917428276525" className="footer-link">+91 74282 76525</a>
               </li>
               <li>
-                <span className="footer-link-plain">Delhi, India</span>
+                <span className="footer-link-plain">Jahangirpuri, New Delhi</span>
               </li>
               <li className="footer-availability">
                 <span className="footer-dot" />
@@ -197,7 +197,7 @@ export default function Footer() {
           <div className="footer-year-marquee-inner">
             {Array(8).fill(null).map((_, i) => (
               <span key={i} className="footer-year-item">
-                Kodit Agency · Delhi, India ·
+                Kodit Agency · Jahangirpuri, New Delhi ·
               </span>
             ))}
           </div>
