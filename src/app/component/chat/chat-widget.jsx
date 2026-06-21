@@ -12,7 +12,7 @@ const KB = [
     answer: `**Web Development at KODIT:**\n\n• 14-day delivery — live in 2 weeks\n• MERN stack + Next.js\n• Sub-2.6s page load speed\n• Fully responsive (mobile/tablet/desktop)\n• SEO-ready structure built-in\n• Ideal for: clinics, restaurants, coaching, e-commerce, startups\n\nContact for free quote:\nkoditagency@gmail.com | +91 7428276525`,
   },
   {
-    keys: ["seo", "geo", "aeo", "rank", "google rank", "search engine", "organic", "keyword", "traffic", "ranking", "search", "perplexity", "chatgpt search", "ai overview", "generative"],
+    keys: ["seo and geo", "seo & geo", "geo services", "seo services", "seo", "geo", "aeo", "rank", "google rank", "search engine", "organic", "keyword", "traffic", "ranking", "perplexity", "chatgpt search", "ai overview", "generative engine"],
     answer: `**SEO + GEO + AEO:**\n\n• **Local SEO** — Google Local Pack (3-pack) domination\n• **GEO** — Your brand cited by ChatGPT, Perplexity, Gemini, AI Overviews\n• **AEO** — Featured snippets & direct answer boxes\n• Process: Keyword mapping → Technical audit → Content → Schema → Reports\n• Timeline: Results start in 60–90 days\n• Monthly transparent reporting included`,
   },
   {
@@ -133,7 +133,7 @@ function RichMessage({ content }) {
 const SUGGESTIONS = [
   { label: "All Services", text: "What services do you offer?" },
   { label: "Web Dev", text: "Tell me about Web Development." },
-  { label: "SEO & GEO", text: "What SEO and GEO services do you offer?" },
+  { label: "SEO & GEO", text: "Tell me about SEO and GEO." },
   { label: "Google Maps", text: "How do you optimize Google Business Profiles?" },
   { label: "AI Automation", text: "What AI automation do you build?" },
   { label: "Graphic Design", text: "Tell me about Graphic Design." },
@@ -187,13 +187,27 @@ export default function ChatWidget() {
     return () => el.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ── Stop wheel propagation
+  // ── Prevent page scroll when mouse is over chat body
   useEffect(() => {
     const el = bodyRef.current;
     if (!el) return;
-    const stop = (e) => e.stopPropagation();
-    el.addEventListener("wheel", stop, { passive: true });
-    return () => el.removeEventListener("wheel", stop);
+    const onWheel = (e) => {
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const atTop = scrollTop === 0 && e.deltaY < 0;
+      const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
+      // Only preventDefault if there is room to scroll inside the chat
+      if (!atTop && !atBottom) {
+        e.preventDefault();
+      } else if (atTop && e.deltaY < 0) {
+        e.preventDefault();
+      } else if (atBottom && e.deltaY > 0) {
+        e.preventDefault();
+      }
+      e.stopPropagation();
+    };
+    // passive: false required to call preventDefault
+    el.addEventListener("wheel", onWheel, { passive: false });
+    return () => el.removeEventListener("wheel", onWheel);
   }, []);
 
   // ── Focus input when chat opens
