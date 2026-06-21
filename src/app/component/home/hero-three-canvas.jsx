@@ -7,6 +7,7 @@ export default function HeroThreeCanvas() {
   useEffect(() => {
     let animId;
     let THREE;
+    let cleanup;
 
     const init = async () => {
       THREE = await import("three");
@@ -15,50 +16,66 @@ export default function HeroThreeCanvas() {
       if (!canvas) return;
 
       // ── Renderer ────────────────────────────────────────────
-      const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      const renderer = new THREE.WebGLRenderer({
+        canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: "high-performance",
+      });
       renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.setSize(canvas.clientWidth, canvas.clientHeight);
       renderer.setClearColor(0x000000, 0);
+      renderer.toneMapping = THREE.ACESFilmicToneMapping;
+      renderer.toneMappingExposure = 1.2;
 
       // ── Scene & Camera ──────────────────────────────────────
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(60, canvas.clientWidth / canvas.clientHeight, 0.1, 100);
-      camera.position.set(0, 0, 5);
+      const camera = new THREE.PerspectiveCamera(55, canvas.clientWidth / canvas.clientHeight, 0.1, 200);
+      camera.position.set(0, 0, 6);
 
-      // ── Particle Field ──────────────────────────────────────
-      const particleCount = 1200;
+      // ── Fog for depth ───────────────────────────────────────
+      scene.fog = new THREE.FogExp2(0x070708, 0.035);
+
+      // ════════════════════════════════════════════════════════
+      // 1. PARTICLE FIELD — 1800 points with varied colors
+      // ════════════════════════════════════════════════════════
+      const particleCount = 1800;
       const positions = new Float32Array(particleCount * 3);
       const colors = new Float32Array(particleCount * 3);
-      const sizes = new Float32Array(particleCount);
 
       const orange = new THREE.Color("#E84D0E");
-      const dim = new THREE.Color("#333333");
+      const orangeLight = new THREE.Color("#FF6B35");
+      const dim = new THREE.Color("#2a2a2e");
       const blue = new THREE.Color("#3b82f6");
+      const white = new THREE.Color("#ffffff");
 
       for (let i = 0; i < particleCount; i++) {
-        positions[i * 3]     = (Math.random() - 0.5) * 20;
-        positions[i * 3 + 1] = (Math.random() - 0.5) * 20;
-        positions[i * 3 + 2] = (Math.random() - 0.5) * 10;
+        positions[i * 3]     = (Math.random() - 0.5) * 28;
+        positions[i * 3 + 1] = (Math.random() - 0.5) * 22;
+        positions[i * 3 + 2] = (Math.random() - 0.5) * 14;
 
         const r = Math.random();
-        const col = r < 0.08 ? orange : r < 0.14 ? blue : dim;
+        let col;
+        if (r < 0.07)       col = orange;
+        else if (r < 0.12)  col = orangeLight;
+        else if (r < 0.17)  col = blue;
+        else if (r < 0.2)   col = white;
+        else                col = dim;
+
         colors[i * 3]     = col.r;
         colors[i * 3 + 1] = col.g;
         colors[i * 3 + 2] = col.b;
-
-        sizes[i] = Math.random() * 2.5 + 0.5;
       }
 
       const particleGeo = new THREE.BufferGeometry();
       particleGeo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
-      particleGeo.setAttribute("color", new THREE.BufferAttribute(colors, 3));
-      particleGeo.setAttribute("size", new THREE.BufferAttribute(sizes, 1));
+      particleGeo.setAttribute("color",    new THREE.BufferAttribute(colors, 3));
 
       const particleMat = new THREE.PointsMaterial({
-        size: 0.04,
+        size: 0.038,
         vertexColors: true,
         transparent: true,
-        opacity: 0.75,
+        opacity: 0.8,
         sizeAttenuation: true,
         blending: THREE.AdditiveBlending,
         depthWrite: false,
@@ -67,64 +84,131 @@ export default function HeroThreeCanvas() {
       const particles = new THREE.Points(particleGeo, particleMat);
       scene.add(particles);
 
-      // ── Wireframe Icosahedron ────────────────────────────────
-      const icoGeo = new THREE.IcosahedronGeometry(1.4, 1);
-      const icoMat = new THREE.MeshBasicMaterial({
+      // ════════════════════════════════════════════════════════
+      // 2. WIREFRAME ICOSAHEDRON — orange, right side
+      // ════════════════════════════════════════════════════════
+      const icoGeo = new THREE.IcosahedronGeometry(1.6, 1);
+      const icoEdges = new THREE.EdgesGeometry(icoGeo);
+      const icoMat = new THREE.LineBasicMaterial({
         color: 0xe84d0e,
-        wireframe: true,
         transparent: true,
-        opacity: 0.12,
+        opacity: 0.22,
+        blending: THREE.AdditiveBlending,
       });
-      const icosahedron = new THREE.Mesh(icoGeo, icoMat);
-      icosahedron.position.set(3.2, -0.5, 0);
+      const icosahedron = new THREE.LineSegments(icoEdges, icoMat);
+      icosahedron.position.set(3.8, -0.3, -1);
       scene.add(icosahedron);
 
-      // ── Wireframe Torus ──────────────────────────────────────
-      const torusGeo = new THREE.TorusGeometry(0.9, 0.28, 16, 60);
-      const torusMat = new THREE.MeshBasicMaterial({
-        color: 0x3b82f6,
-        wireframe: true,
+      // Inner solid icosahedron with very low opacity for volume
+      const icoSolidMat = new THREE.MeshBasicMaterial({
+        color: 0xe84d0e,
         transparent: true,
-        opacity: 0.1,
+        opacity: 0.03,
+        side: THREE.BackSide,
       });
-      const torus = new THREE.Mesh(torusGeo, torusMat);
-      torus.position.set(-3.5, 0.8, -1);
-      torus.rotation.x = Math.PI / 4;
-      scene.add(torus);
+      const icoSolid = new THREE.Mesh(icoGeo, icoSolidMat);
+      icoSolid.position.copy(icosahedron.position);
+      scene.add(icoSolid);
 
-      // ── Connecting Lines (DNA-like) ──────────────────────────
-      const lineCount = 40;
+      // ════════════════════════════════════════════════════════
+      // 3. TORUS KNOT — blue, top-left, more complex shape
+      // ════════════════════════════════════════════════════════
+      const knotGeo = new THREE.TorusKnotGeometry(0.9, 0.28, 120, 16, 2, 3);
+      const knotEdges = new THREE.EdgesGeometry(knotGeo);
+      const knotMat = new THREE.LineBasicMaterial({
+        color: 0x3b82f6,
+        transparent: true,
+        opacity: 0.15,
+        blending: THREE.AdditiveBlending,
+      });
+      const torusKnot = new THREE.LineSegments(knotEdges, knotMat);
+      torusKnot.position.set(-3.8, 0.9, -1.5);
+      scene.add(torusKnot);
+
+      // ════════════════════════════════════════════════════════
+      // 4. OCTAHEDRON — accent, bottom center
+      // ════════════════════════════════════════════════════════
+      const octGeo = new THREE.OctahedronGeometry(0.7, 0);
+      const octEdges = new THREE.EdgesGeometry(octGeo);
+      const octMat = new THREE.LineBasicMaterial({
+        color: 0xff6b35,
+        transparent: true,
+        opacity: 0.18,
+        blending: THREE.AdditiveBlending,
+      });
+      const octahedron = new THREE.LineSegments(octEdges, octMat);
+      octahedron.position.set(0.5, -2.5, 0.5);
+      scene.add(octahedron);
+
+      // ════════════════════════════════════════════════════════
+      // 5. CONNECTING NETWORK LINES
+      // ════════════════════════════════════════════════════════
       const lineMat = new THREE.LineBasicMaterial({
         color: 0xe84d0e,
         transparent: true,
-        opacity: 0.06,
+        opacity: 0.055,
         blending: THREE.AdditiveBlending,
       });
       const lineGroup = new THREE.Group();
-      for (let i = 0; i < lineCount; i++) {
+      for (let i = 0; i < 55; i++) {
         const lineGeo = new THREE.BufferGeometry();
-        const pts = [];
         const start = new THREE.Vector3(
-          (Math.random() - 0.5) * 16,
-          (Math.random() - 0.5) * 16,
-          (Math.random() - 0.5) * 6
+          (Math.random() - 0.5) * 20,
+          (Math.random() - 0.5) * 18,
+          (Math.random() - 0.5) * 8
         );
         const end = new THREE.Vector3(
-          start.x + (Math.random() - 0.5) * 4,
-          start.y + (Math.random() - 0.5) * 4,
-          start.z + (Math.random() - 0.5) * 2
+          start.x + (Math.random() - 0.5) * 5,
+          start.y + (Math.random() - 0.5) * 5,
+          start.z + (Math.random() - 0.5) * 3
         );
-        pts.push(start, end);
-        lineGeo.setFromPoints(pts);
+        lineGeo.setFromPoints([start, end]);
         lineGroup.add(new THREE.Line(lineGeo, lineMat));
       }
       scene.add(lineGroup);
 
+      // ════════════════════════════════════════════════════════
+      // 6. GRID PLANE — bottom depth cue
+      // ════════════════════════════════════════════════════════
+      const gridHelper = new THREE.GridHelper(30, 30, 0xe84d0e, 0x1a1a22);
+      gridHelper.position.y = -4;
+      gridHelper.material.transparent = true;
+      gridHelper.material.opacity = 0.12;
+      scene.add(gridHelper);
+
+      // ════════════════════════════════════════════════════════
+      // 7. AMBIENT RING — orange halo behind text area
+      // ════════════════════════════════════════════════════════
+      const ringGeo = new THREE.TorusGeometry(2.5, 0.008, 2, 120);
+      const ringMat = new THREE.MeshBasicMaterial({
+        color: 0xe84d0e,
+        transparent: true,
+        opacity: 0.12,
+        blending: THREE.AdditiveBlending,
+      });
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.rotation.x = Math.PI / 2;
+      ring.position.y = 0.2;
+      scene.add(ring);
+
+      const ring2Geo = new THREE.TorusGeometry(4.0, 0.005, 2, 180);
+      const ring2Mat = new THREE.MeshBasicMaterial({
+        color: 0x3b82f6,
+        transparent: true,
+        opacity: 0.06,
+        blending: THREE.AdditiveBlending,
+      });
+      const ring2 = new THREE.Mesh(ring2Geo, ring2Mat);
+      ring2.rotation.x = Math.PI / 2.5;
+      ring2.position.y = -0.5;
+      scene.add(ring2);
+
       // ── Mouse Parallax ──────────────────────────────────────
       let mouse = { x: 0, y: 0 };
+      let targetMouse = { x: 0, y: 0 };
       const onMouseMove = (e) => {
-        mouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
+        targetMouse.x = (e.clientX / window.innerWidth - 0.5) * 2;
+        targetMouse.y = -(e.clientY / window.innerHeight - 0.5) * 2;
       };
       window.addEventListener("mousemove", onMouseMove);
 
@@ -145,28 +229,47 @@ export default function HeroThreeCanvas() {
         animId = requestAnimationFrame(animate);
         const t = clock.getElapsedTime();
 
-        // Rotate particles slowly
-        particles.rotation.y = t * 0.03;
-        particles.rotation.x = t * 0.01;
+        // Smooth mouse interpolation
+        mouse.x += (targetMouse.x - mouse.x) * 0.05;
+        mouse.y += (targetMouse.y - mouse.y) * 0.05;
 
-        // Rotate icosahedron
-        icosahedron.rotation.x = t * 0.25;
-        icosahedron.rotation.y = t * 0.35;
+        // Particles drift
+        particles.rotation.y = t * 0.018;
+        particles.rotation.x = t * 0.007;
 
-        // Rotate torus
-        torus.rotation.y = t * 0.2;
-        torus.rotation.z = t * 0.15;
+        // Icosahedron
+        icosahedron.rotation.x = t * 0.22;
+        icosahedron.rotation.y = t * 0.31;
+        icoSolid.rotation.copy(icosahedron.rotation);
 
-        // Mouse parallax on camera
-        camera.position.x += (mouse.x * 0.5 - camera.position.x) * 0.04;
-        camera.position.y += (mouse.y * 0.3 - camera.position.y) * 0.04;
+        // Torus knot — complex rotation
+        torusKnot.rotation.x = t * 0.14;
+        torusKnot.rotation.y = t * 0.19;
+        torusKnot.rotation.z = t * 0.08;
+
+        // Octahedron
+        octahedron.rotation.x = t * 0.3;
+        octahedron.rotation.z = t * 0.2;
+
+        // Rings pulse
+        ring.rotation.z = t * 0.05;
+        ring2.rotation.z = -t * 0.03;
+        ringMat.opacity = 0.08 + Math.sin(t * 0.8) * 0.04;
+        ring2Mat.opacity = 0.04 + Math.sin(t * 0.6 + 1) * 0.02;
+
+        // Lines sway
+        lineGroup.rotation.y = t * 0.01;
+
+        // Camera parallax
+        camera.position.x += (mouse.x * 0.6 - camera.position.x) * 0.035;
+        camera.position.y += (mouse.y * 0.35 - camera.position.y) * 0.035;
         camera.lookAt(scene.position);
 
         renderer.render(scene, camera);
       };
       animate();
 
-      return () => {
+      cleanup = () => {
         cancelAnimationFrame(animId);
         window.removeEventListener("mousemove", onMouseMove);
         window.removeEventListener("resize", onResize);
@@ -174,8 +277,8 @@ export default function HeroThreeCanvas() {
       };
     };
 
-    const cleanup = init();
-    return () => { cleanup.then((fn) => fn && fn()); };
+    init();
+    return () => { cleanup && cleanup(); };
   }, []);
 
   return (
