@@ -18,13 +18,13 @@ export const metadata = {
     siteName: 'KODIT Agency',
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: 'https://kodit.agency/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://kodit.agency/opengraph.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Digital Services — Web Dev, SEO, GMB & AI Automation | KODIT Agency Delhi',
     description: '6 digital services from Delhi: Web Development (React, Next.js, MERN stack), SEO, Google Maps optimization, Design, Social Media, and AI Automation.',
-    images: ['https://kodit.agency/og-image.png'],
+    images: ['https://kodit.agency/opengraph.png'],
   },
   alternates: {
     canonical: 'https://kodit.agency/service',

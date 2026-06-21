@@ -19,13 +19,13 @@ export const metadata = {
     title: "Contact Us | KODIT Agency — New Delhi's Digital Experts",
     description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development, local SEO, GBP optimization, and AI automation. Start your digital journey today.",
     url: "https://kodit.agency/contact",
-    images: [{ url: "https://kodit.agency/og-image.png", width: 1200, height: 630, alt: "Contact KODIT Agency" }],
+    images: [{ url: "https://kodit.agency/opengraph.png", width: 1200, height: 630, alt: "Contact KODIT Agency" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Contact Us | KODIT Agency — New Delhi's Digital Experts",
     description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development, local SEO, GBP optimization, and AI automation. Start your digital journey today.",
-    images: ["https://kodit.agency/og-image.png"],
+    images: ["https://kodit.agency/opengraph.png"],
   }
 };
 

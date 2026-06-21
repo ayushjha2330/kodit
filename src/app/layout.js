@@ -47,13 +47,13 @@ export const metadata = {
     siteName: 'KODIT Agency',
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: 'https://kodit.agency/og-image.png', width: 1200, height: 630, alt: 'KODIT Agency — Delhi Digital Agency' }],
+    images: [{ url: 'https://kodit.agency/opengraph.png', width: 1200, height: 630, alt: 'KODIT Agency — Delhi Digital Agency' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'KODIT Agency — Delhi Web Development, SEO & Marketing Agency',
     description: 'Custom websites, SEO, Google Maps ranking, social media, and AI automation for businesses across India. Based in New Delhi, Jahangirpuri.',
-    images: ['https://kodit.agency/og-image.png'],
+    images: ['https://kodit.agency/opengraph.png'],
   },
   alternates: {
     canonical: 'https://kodit.agency',

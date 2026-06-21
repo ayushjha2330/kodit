@@ -16,13 +16,13 @@ export const metadata = {
     siteName: 'KODIT Agency',
     locale: 'en_IN',
     type: 'website',
-    images: [{ url: 'https://kodit.agency/og-image.png', width: 1200, height: 630 }],
+    images: [{ url: 'https://kodit.agency/opengraph.png', width: 1200, height: 630 }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contact KODIT Agency Delhi — Free Discovery Call',
     description: 'Contact us in New Delhi for web development, SEO, and marketing. Free consultations.',
-    images: ['https://kodit.agency/og-image.png'],
+    images: ['https://kodit.agency/opengraph.png'],
   },
   alternates: {
     canonical: 'https://kodit.agency/contact',

@@ -1,7 +1,6 @@
 "use client";
 import { useState, useRef, useEffect, useCallback } from "react";
 
-// ─── Knowledge Base (no emojis, clean & short) ───────────────────────────────
 const KB = [
   {
     keys: ["service", "offer", "kya karte", "kya karta", "help", "provide", "all service", "sab", "sabhi", "list"],
@@ -69,31 +68,21 @@ const KB = [
   },
 ];
 
-// ─── Smart Matcher ────────────────────────────────────────────────────────────
 function getBotReply(query) {
   const q = query.toLowerCase().trim();
   let bestMatch = null;
   let bestScore = 0;
-
   for (const entry of KB) {
     let score = 0;
     for (const key of entry.keys) {
-      if (q.includes(key)) {
-        score += key.split(" ").length;
-      }
+      if (q.includes(key)) score += key.split(" ").length;
     }
-    if (score > bestScore) {
-      bestScore = score;
-      bestMatch = entry;
-    }
+    if (score > bestScore) { bestScore = score; bestMatch = entry; }
   }
-
   if (bestMatch) return bestMatch.answer;
-
   return `Sorry, I only answer questions about KODIT Agency.\n\nYou can ask about:\n• Services (Web Dev, SEO, GMB, Design, Social, AI)\n• Pricing & packages\n• Contact & location\n• Team & founders\n• Work process\n\nOr call directly: +91 7428276525`;
 }
 
-// ─── Render rich text (bold + bullets + clickable links) ─────────────────────
 function RichMessage({ content }) {
   return (
     <div className="rich-msg">
@@ -102,34 +91,21 @@ function RichMessage({ content }) {
         const isIndent = line.startsWith("   -");
         const text = isBullet ? line.slice(2) : isIndent ? line.slice(4) : line;
         if (!text.trim()) return <br key={li} />;
-
         const segments = text.split(/(\*\*.*?\*\*|koditagency@gmail\.com|\+91\s?7428276525)/g);
         const rendered = segments.map((seg, si) => {
-          if (seg.startsWith("**") && seg.endsWith("**")) {
-            return <strong key={si}>{seg.slice(2, -2)}</strong>;
-          }
-          if (seg.includes("@") && seg.includes(".")) {
-            return <a key={si} href={`mailto:${seg.trim()}`} className="chat-link">{seg.trim()}</a>;
-          }
-          if (seg.startsWith("+91")) {
-            return <a key={si} href={`tel:${seg.replace(/\s/g, "")}`} className="chat-link">{seg}</a>;
-          }
+          if (seg.startsWith("**") && seg.endsWith("**")) return <strong key={si}>{seg.slice(2, -2)}</strong>;
+          if (seg.includes("@") && seg.includes(".")) return <a key={si} href={`mailto:${seg.trim()}`} className="chat-link">{seg.trim()}</a>;
+          if (seg.startsWith("+91")) return <a key={si} href={`tel:${seg.replace(/\s/g, "")}`} className="chat-link">{seg}</a>;
           return seg;
         });
-
-        if (isBullet) return (
-          <div key={li} className="chat-bullet"><span className="chat-bullet-dot">—</span><span>{rendered}</span></div>
-        );
-        if (isIndent) return (
-          <div key={li} className="chat-indent">{rendered}</div>
-        );
+        if (isBullet) return <div key={li} className="chat-bullet"><span className="chat-bullet-dot">—</span><span>{rendered}</span></div>;
+        if (isIndent) return <div key={li} className="chat-indent">{rendered}</div>;
         return <div key={li} className="chat-line">{rendered}</div>;
       })}
     </div>
   );
 }
 
-// ─── Suggestion Chips ─────────────────────────────────────────────────────────
 const SUGGESTIONS = [
   { label: "All Services", text: "What services do you offer?" },
   { label: "Web Dev", text: "Tell me about Web Development." },
@@ -145,49 +121,24 @@ const SUGGESTIONS = [
   { label: "Free Call", text: "Do you offer a free consultation?" },
 ];
 
-// ─── Main Widget ──────────────────────────────────────────────────────────────
 export default function ChatWidget() {
-  const INITIAL_MSG = {
-    role: "assistant",
-    content: "Hello! I am KODIT Assistant.\n\nAsk me anything about KODIT Agency — services, pricing, team, or contact details.\n\nSelect a topic below or type your question."
-  };
-
+  const INITIAL_MSG = { role: "assistant", content: "Hello! I am KODIT Assistant.\n\nAsk me anything about KODIT Agency — services, pricing, team, or contact details.\n\nSelect a topic below or type your question." };
   const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([INITIAL_MSG]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  // Track whether user is manually scrolling up
   const bodyRef = useRef(null);
   const inputRef = useRef(null);
-  const isAtBottomRef = useRef(true);
   const prevMsgCountRef = useRef(1);
 
-  // ── Smart scroll: only scroll to bottom when NEW message added & user was at bottom
   useEffect(() => {
     const el = bodyRef.current;
     if (!el) return;
     const newMsgAdded = messages.length > prevMsgCountRef.current;
     prevMsgCountRef.current = messages.length;
-    // Always scroll on new message (user sent or bot replied)
-    if (newMsgAdded) {
-      el.scrollTop = el.scrollHeight;
-      isAtBottomRef.current = true;
-    }
+    if (newMsgAdded) el.scrollTop = el.scrollHeight;
   }, [messages]);
 
-  // ── Track user scroll position
-  useEffect(() => {
-    const el = bodyRef.current;
-    if (!el) return;
-    const onScroll = () => {
-      const threshold = 40;
-      isAtBottomRef.current = el.scrollHeight - el.scrollTop - el.clientHeight < threshold;
-    };
-    el.addEventListener("scroll", onScroll, { passive: true });
-    return () => el.removeEventListener("scroll", onScroll);
-  }, []);
-
-  // ── Prevent page scroll when mouse is over chat body
   useEffect(() => {
     const el = bodyRef.current;
     if (!el) return;
@@ -195,22 +146,15 @@ export default function ChatWidget() {
       const { scrollTop, scrollHeight, clientHeight } = el;
       const atTop = scrollTop === 0 && e.deltaY < 0;
       const atBottom = scrollTop + clientHeight >= scrollHeight - 1 && e.deltaY > 0;
-      // Only preventDefault if there is room to scroll inside the chat
-      if (!atTop && !atBottom) {
-        e.preventDefault();
-      } else if (atTop && e.deltaY < 0) {
-        e.preventDefault();
-      } else if (atBottom && e.deltaY > 0) {
-        e.preventDefault();
-      }
+      if (!atTop && !atBottom) e.preventDefault();
+      else if (atTop && e.deltaY < 0) e.preventDefault();
+      else if (atBottom && e.deltaY > 0) e.preventDefault();
       e.stopPropagation();
     };
-    // passive: false required to call preventDefault
     el.addEventListener("wheel", onWheel, { passive: false });
     return () => el.removeEventListener("wheel", onWheel);
   }, []);
 
-  // ── Focus input when chat opens
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 150);
   }, [open]);
@@ -227,26 +171,19 @@ export default function ChatWidget() {
     }, 450);
   }, [input, loading]);
 
-  const resetChat = () => {
-    setMessages([INITIAL_MSG]);
-    prevMsgCountRef.current = 1;
-  };
+  const resetChat = () => { setMessages([INITIAL_MSG]); prevMsgCountRef.current = 1; };
 
   return (
     <>
       <div className="cw-root">
-        {/* Bubble */}
         {!open && (
           <button className="cw-bubble" onClick={() => setOpen(true)} aria-label="Open KODIT chat">
             <img src="/icon.png" alt="KODIT" width={40} height={40} style={{ borderRadius: "50%", objectFit: "cover" }} />
             <span className="cw-bubble-badge">?</span>
           </button>
         )}
-
-        {/* Window */}
         {open && (
           <div className="cw-window">
-            {/* Header */}
             <div className="cw-head">
               <div className="cw-head-left">
                 <div className="cw-avatar-wrap">
@@ -259,20 +196,15 @@ export default function ChatWidget() {
                 </div>
               </div>
               <div style={{ display: "flex", gap: "4px" }}>
-                <button className="cw-head-btn" onClick={resetChat} title="Reset chat" aria-label="Reset">
-                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/>
-                  </svg>
+                <button className="cw-head-btn" onClick={resetChat} title="Reset" aria-label="Reset">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/></svg>
                 </button>
                 <button className="cw-head-btn cw-close" onClick={() => setOpen(false)} aria-label="Close">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                    <path d="M18 6 6 18M6 6l12 12"/>
-                  </svg>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
               </div>
             </div>
 
-            {/* Messages — scroll container */}
             <div className="cw-body" ref={bodyRef}>
               {messages.map((m, i) => (
                 <div key={i} className={`cw-msg-wrap ${m.role === "user" ? "cw-msg-wrap--user" : ""}`}>
@@ -291,23 +223,17 @@ export default function ChatWidget() {
                   <div className="cw-msg-icon">
                     <img src="/icon.png" alt="K" width={20} height={20} style={{ borderRadius: "50%", objectFit: "cover", display: "block" }} />
                   </div>
-                  <div className="cw-msg cw-msg--bot cw-typing">
-                    <span /><span /><span />
-                  </div>
+                  <div className="cw-msg cw-msg--bot cw-typing"><span /><span /><span /></div>
                 </div>
               )}
             </div>
 
-            {/* Suggestion Chips */}
             <div className="cw-chips-bar">
               {SUGGESTIONS.map((s, i) => (
-                <button key={i} className="cw-chip" onClick={() => handleSend(s.text)} disabled={loading}>
-                  {s.label}
-                </button>
+                <button key={i} className="cw-chip" onClick={() => handleSend(s.text)} disabled={loading}>{s.label}</button>
               ))}
             </div>
 
-            {/* Input */}
             <div className="cw-input-bar">
               <input
                 ref={inputRef}
@@ -319,9 +245,7 @@ export default function ChatWidget() {
                 disabled={loading}
               />
               <button className="cw-send" onClick={() => handleSend()} disabled={loading || !input.trim()} aria-label="Send">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/>
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
               </button>
             </div>
           </div>
@@ -329,312 +253,169 @@ export default function ChatWidget() {
       </div>
 
       <style jsx global>{`
-        .cw-root {
-          position: fixed;
-          bottom: 24px;
-          right: 24px;
-          z-index: 9999;
-          font-family: 'Inter', sans-serif;
-        }
+        .cw-root { position: fixed; bottom: 28px; right: 28px; z-index: 9999; font-family: 'Inter', sans-serif; }
 
-        /* Bubble */
         .cw-bubble {
-          width: 60px;
-          height: 60px;
-          border-radius: 50%;
-          background: linear-gradient(135deg, #1a1a1a, #0c0c0c);
-          border: 2px solid rgba(232,77,14,0.4);
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          position: relative;
-          animation: cwPulse 2.5s ease-in-out infinite;
-          transition: transform 0.2s ease;
-          box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+          width: 62px; height: 62px; border-radius: 50%;
+          background: #0e0e0e; border: 1.5px solid rgba(232,77,14,0.5);
+          cursor: pointer; display: flex; align-items: center; justify-content: center;
+          position: relative; transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+          box-shadow: 0 8px 28px rgba(0,0,0,0.5); animation: cwPulse 3s ease-in-out infinite;
         }
-        .cw-bubble:hover { transform: scale(1.08); }
+        .cw-bubble:hover { transform: scale(1.1); box-shadow: 0 12px 36px rgba(232,77,14,0.25); }
         .cw-bubble-badge {
-          position: absolute;
-          top: -2px;
-          right: -2px;
-          width: 20px;
-          height: 20px;
-          border-radius: 50%;
-          background: #E84D0E;
-          color: white;
-          font-size: 11px;
-          font-weight: 700;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 2px solid #0c0c0c;
+          position: absolute; top: -3px; right: -3px; width: 20px; height: 20px;
+          border-radius: 50%; background: linear-gradient(135deg,#E84D0E,#c93d08);
+          color: white; font-size: 11px; font-weight: 700;
+          display: flex; align-items: center; justify-content: center;
+          border: 2px solid #080808; box-shadow: 0 2px 8px rgba(232,77,14,0.5);
         }
         @keyframes cwPulse {
-          0%, 100% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 0 rgba(232,77,14,0.25); }
-          50% { box-shadow: 0 4px 20px rgba(0,0,0,0.4), 0 0 0 10px rgba(232,77,14,0); }
+          0%,100% { box-shadow: 0 0 0 0 rgba(232,77,14,0.3),0 8px 28px rgba(0,0,0,0.5); }
+          50% { box-shadow: 0 0 0 12px rgba(232,77,14,0),0 8px 28px rgba(0,0,0,0.5); }
         }
 
-        /* Window */
         .cw-window {
-          width: 360px;
-          height: 540px;
-          background: #0f0f0f;
-          border: 1px solid rgba(255,255,255,0.08);
-          border-radius: 18px;
-          display: flex;
-          flex-direction: column;
-          overflow: hidden;
-          box-shadow: 0 16px 60px rgba(0,0,0,0.6);
-          animation: cwSlide 0.22s cubic-bezier(0.34,1.56,0.64,1);
+          width: 368px; height: 560px;
+          background: rgba(10,10,10,0.97);
+          backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+          border: 1px solid rgba(255,255,255,0.07); border-radius: 20px;
+          display: flex; flex-direction: column; overflow: hidden;
+          box-shadow: 0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px rgba(232,77,14,0.06), inset 0 1px 0 rgba(255,255,255,0.05);
+          animation: cwSlide 0.28s cubic-bezier(0.34,1.56,0.64,1);
         }
         @keyframes cwSlide {
-          from { opacity: 0; transform: translateY(16px) scale(0.94); }
-          to { opacity: 1; transform: translateY(0) scale(1); }
+          from { opacity:0; transform:translateY(20px) scale(0.92); }
+          to { opacity:1; transform:translateY(0) scale(1); }
         }
 
-        /* Header */
         .cw-head {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 13px 15px;
-          background: #0c0c0c;
-          border-bottom: 1px solid rgba(255,255,255,0.06);
-          flex-shrink: 0;
+          display: flex; align-items: center; justify-content: space-between;
+          padding: 15px 16px; background: linear-gradient(135deg,#141414,#0e0e0e);
+          border-bottom: 1px solid rgba(255,255,255,0.055); flex-shrink: 0;
+          position: relative; overflow: hidden;
         }
-        .cw-head-left { display: flex; align-items: center; gap: 10px; }
-        .cw-avatar-wrap { position: relative; width: 36px; height: 36px; }
+        .cw-head::after {
+          content:''; position:absolute; top:0; left:0; right:0; height:1px;
+          background: linear-gradient(90deg,transparent,rgba(232,77,14,0.35),transparent);
+        }
+        .cw-head-left { display:flex; align-items:center; gap:11px; }
+        .cw-avatar-wrap {
+          position:relative; width:38px; height:38px; border-radius:50%;
+          border:1.5px solid rgba(232,77,14,0.3); padding:2px; background:#111;
+        }
+        .cw-avatar-wrap img { border-radius:50%; width:100%!important; height:100%!important; }
         .cw-online-dot {
-          position: absolute;
-          bottom: 1px; right: 1px;
-          width: 9px; height: 9px;
-          border-radius: 50%;
-          background: #22c55e;
-          border: 2px solid #0c0c0c;
+          position:absolute; bottom:0; right:0; width:10px; height:10px;
+          border-radius:50%; background:#22c55e; border:2px solid #0e0e0e;
+          box-shadow:0 0 6px rgba(34,197,94,0.6); animation:cwOnlinePulse 2s ease-in-out infinite;
         }
-        .cw-name {
-          display: block;
-          font-size: 13px;
-          font-weight: 600;
-          color: #F0EDE8;
-          line-height: 1.2;
+        @keyframes cwOnlinePulse {
+          0%,100% { box-shadow:0 0 0 0 rgba(34,197,94,0.4); }
+          50% { box-shadow:0 0 0 4px rgba(34,197,94,0); }
         }
-        .cw-status {
-          display: block;
-          font-size: 10px;
-          color: rgba(255,255,255,0.4);
-          margin-top: 1px;
-        }
+        .cw-name { display:block; font-size:13.5px; font-weight:700; color:#F0EDE8; line-height:1.2; letter-spacing:-0.01em; }
+        .cw-status { display:block; font-size:10.5px; color:rgba(255,255,255,0.38); margin-top:2px; }
         .cw-head-btn {
-          background: none;
-          border: none;
-          color: rgba(255,255,255,0.35);
-          cursor: pointer;
-          padding: 6px;
-          border-radius: 7px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.15s ease;
+          background:none; border:none; color:rgba(255,255,255,0.28); cursor:pointer;
+          padding:7px; border-radius:8px; display:flex; align-items:center; justify-content:center;
+          transition:all 0.18s ease;
         }
-        .cw-head-btn:hover { color: #fff; background: rgba(255,255,255,0.07); }
-        .cw-close:hover { color: #E84D0E; }
+        .cw-head-btn:hover { color:rgba(255,255,255,0.8); background:rgba(255,255,255,0.06); }
+        .cw-close:hover { color:#E84D0E; background:rgba(232,77,14,0.1); }
 
-        /* Body — THE SCROLL FIX */
         .cw-body {
-          flex: 1;
-          min-height: 0;          /* critical: allows flex child to shrink & scroll */
-          overflow-y: scroll;     /* always show scrollbar track */
-          overflow-x: hidden;
-          padding: 14px 12px;
-          display: flex;
-          flex-direction: column;
-          gap: 10px;
-          scrollbar-width: thin;
-          scrollbar-color: rgba(255,255,255,0.1) transparent;
-          overscroll-behavior: contain;
+          flex:1; min-height:0; overflow-y:scroll; overflow-x:hidden;
+          padding:16px 14px; display:flex; flex-direction:column; gap:12px;
+          scrollbar-width:thin; scrollbar-color:rgba(255,255,255,0.08) transparent;
+          overscroll-behavior:contain;
+          background: radial-gradient(ellipse at top center, rgba(232,77,14,0.025) 0%, transparent 60%);
         }
-        .cw-body::-webkit-scrollbar { width: 4px; }
-        .cw-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .cw-body::-webkit-scrollbar { width:3px; }
+        .cw-body::-webkit-scrollbar-thumb { background:rgba(255,255,255,0.1); border-radius:4px; }
+        .cw-body::-webkit-scrollbar-thumb:hover { background:rgba(232,77,14,0.4); }
 
-        /* Message bubbles */
-        .cw-msg-wrap {
-          display: flex;
-          align-items: flex-end;
-          gap: 7px;
-          animation: cwMsgIn 0.18s ease;
-        }
-        .cw-msg-wrap--user { flex-direction: row-reverse; }
+        .cw-msg-wrap { display:flex; align-items:flex-end; gap:8px; animation:cwMsgIn 0.22s cubic-bezier(0.34,1.56,0.64,1); }
+        .cw-msg-wrap--user { flex-direction:row-reverse; }
         @keyframes cwMsgIn {
-          from { opacity: 0; transform: translateY(6px); }
-          to { opacity: 1; transform: translateY(0); }
+          from { opacity:0; transform:translateY(10px) scale(0.95); }
+          to { opacity:1; transform:translateY(0) scale(1); }
         }
-        .cw-msg-icon {
-          width: 22px; height: 22px;
-          flex-shrink: 0;
-          border-radius: 50%;
-          overflow: hidden;
-          background: #1a1a1a;
-        }
-        .cw-msg {
-          max-width: 84%;
-          padding: 9px 13px;
-          border-radius: 14px;
-          font-size: 12.5px;
-          line-height: 1.6;
-        }
+        .cw-msg-icon { width:24px; height:24px; flex-shrink:0; border-radius:50%; overflow:hidden; background:#1a1a1a; border:1px solid rgba(232,77,14,0.2); }
+        .cw-msg { max-width:82%; padding:10px 14px; border-radius:16px; font-size:12.5px; line-height:1.65; }
         .cw-msg--bot {
-          background: #1c1c1c;
-          color: rgba(255,255,255,0.87);
-          border-bottom-left-radius: 4px;
-          border: 1px solid rgba(255,255,255,0.05);
+          background:linear-gradient(145deg,#1a1a1a,#161616);
+          color:rgba(255,255,255,0.88); border-bottom-left-radius:4px;
+          border:1px solid rgba(255,255,255,0.07); box-shadow:0 2px 12px rgba(0,0,0,0.3);
         }
         .cw-msg--user {
-          background: rgba(232,77,14,0.18);
-          color: #F0EDE8;
-          border-bottom-right-radius: 4px;
-          border: 1px solid rgba(232,77,14,0.25);
+          background:linear-gradient(135deg,rgba(232,77,14,0.22),rgba(232,77,14,0.1));
+          color:#F0EDE8; border-bottom-right-radius:4px;
+          border:1px solid rgba(232,77,14,0.28); box-shadow:0 2px 12px rgba(232,77,14,0.12);
         }
 
-        /* Rich message internals */
-        .rich-msg { display: flex; flex-direction: column; gap: 2px; }
-        .chat-line { margin: 1px 0; }
-        .chat-bullet {
-          display: flex;
-          gap: 8px;
-          margin: 2px 0;
-          align-items: flex-start;
-        }
-        .chat-bullet-dot {
-          color: rgba(232,77,14,0.8);
-          flex-shrink: 0;
-          font-size: 11px;
-          margin-top: 2px;
-        }
-        .chat-indent {
-          margin: 2px 0 2px 16px;
-          color: rgba(255,255,255,0.7);
-        }
-        .chat-link {
-          color: #E84D0E;
-          text-decoration: underline;
-          text-decoration-color: rgba(232,77,14,0.35);
-        }
-        .chat-link:hover { color: #ff6b35; }
+        .rich-msg { display:flex; flex-direction:column; gap:3px; }
+        .chat-line { margin:1px 0; }
+        .chat-bullet { display:flex; gap:9px; margin:3px 0; align-items:flex-start; }
+        .chat-bullet-dot { color:#E84D0E; flex-shrink:0; font-size:12px; margin-top:1px; opacity:0.8; }
+        .chat-indent { margin:2px 0 2px 16px; color:rgba(255,255,255,0.65); font-size:12px; }
+        .chat-link { color:#E84D0E; text-decoration:none; border-bottom:1px solid rgba(232,77,14,0.3); transition:all 0.15s ease; }
+        .chat-link:hover { color:#ff6b35; border-color:rgba(255,107,53,0.6); }
+        .cw-msg--bot strong { color:#fff; font-weight:600; }
 
-        /* Typing dots */
-        .cw-typing {
-          display: flex;
-          gap: 4px;
-          align-items: center;
-          padding: 11px 14px !important;
-          min-width: 50px;
-        }
-        .cw-typing span {
-          display: block;
-          width: 5px; height: 5px;
-          border-radius: 50%;
-          background: rgba(255,255,255,0.3);
-          animation: cwBounce 1.2s infinite;
-        }
-        .cw-typing span:nth-child(2) { animation-delay: 0.2s; }
-        .cw-typing span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes cwBounce {
-          0%, 60%, 100% { transform: translateY(0); }
-          30% { transform: translateY(-5px); }
-        }
+        .cw-typing { display:flex; gap:5px; align-items:center; padding:12px 16px!important; min-width:56px; }
+        .cw-typing span { display:block; width:6px; height:6px; border-radius:50%; background:rgba(232,77,14,0.5); animation:cwBounce 1.4s infinite; }
+        .cw-typing span:nth-child(2) { animation-delay:0.18s; background:rgba(232,77,14,0.7); }
+        .cw-typing span:nth-child(3) { animation-delay:0.36s; background:rgba(232,77,14,0.9); }
+        @keyframes cwBounce { 0%,60%,100% { transform:translateY(0); } 30% { transform:translateY(-6px); } }
 
-        /* Chips */
         .cw-chips-bar {
-          flex-shrink: 0;
-          display: flex;
-          gap: 6px;
-          padding: 7px 10px;
-          overflow-x: auto;
-          border-top: 1px solid rgba(255,255,255,0.05);
-          background: #0c0c0c;
-          scrollbar-width: none;
+          flex-shrink:0; display:flex; gap:6px; padding:8px 12px;
+          overflow-x:auto; border-top:1px solid rgba(255,255,255,0.05);
+          background:linear-gradient(180deg,#0a0a0a,#0c0c0c); scrollbar-width:none;
         }
-        .cw-chips-bar::-webkit-scrollbar { display: none; }
+        .cw-chips-bar::-webkit-scrollbar { display:none; }
         .cw-chip {
-          display: inline-flex;
-          align-items: center;
-          flex-shrink: 0;
-          padding: 5px 11px;
-          border-radius: 20px;
-          background: #1a1a1a;
-          border: 1px solid rgba(255,255,255,0.08);
-          color: rgba(255,255,255,0.7);
-          font-size: 11px;
-          font-weight: 500;
-          cursor: pointer;
-          white-space: nowrap;
-          transition: all 0.15s ease;
-          font-family: 'Inter', sans-serif;
+          display:inline-flex; align-items:center; flex-shrink:0;
+          padding:5px 12px; border-radius:20px; background:rgba(255,255,255,0.03);
+          border:1px solid rgba(255,255,255,0.08); color:rgba(255,255,255,0.6);
+          font-size:11px; font-weight:500; cursor:pointer; white-space:nowrap;
+          transition:all 0.18s ease; font-family:'Inter',sans-serif; letter-spacing:0.01em;
         }
         .cw-chip:hover:not(:disabled) {
-          background: rgba(232,77,14,0.12);
-          border-color: rgba(232,77,14,0.4);
-          color: #F0EDE8;
+          background:rgba(232,77,14,0.12); border-color:rgba(232,77,14,0.38);
+          color:#F0EDE8; transform:translateY(-1px); box-shadow:0 4px 12px rgba(232,77,14,0.1);
         }
-        .cw-chip:disabled { opacity: 0.4; cursor: not-allowed; }
+        .cw-chip:disabled { opacity:0.35; cursor:not-allowed; }
 
-        /* Input bar */
         .cw-input-bar {
-          flex-shrink: 0;
-          display: flex;
-          align-items: center;
-          gap: 8px;
-          padding: 10px 12px;
-          border-top: 1px solid rgba(255,255,255,0.06);
-          background: #0c0c0c;
+          flex-shrink:0; display:flex; align-items:center; gap:8px;
+          padding:11px 13px; border-top:1px solid rgba(255,255,255,0.06); background:#0a0a0a;
         }
         .cw-input {
-          flex: 1;
-          background: #1c1c1c;
-          border: 1px solid rgba(255,255,255,0.07);
-          border-radius: 10px;
-          padding: 8px 12px;
-          font-family: 'Inter', sans-serif;
-          font-size: 12.5px;
-          color: #F0EDE8;
-          outline: none;
-          transition: border-color 0.15s ease;
-          min-width: 0;
+          flex:1; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08);
+          border-radius:12px; padding:9px 14px; font-family:'Inter',sans-serif;
+          font-size:12.5px; color:#F0EDE8; outline:none; transition:all 0.18s ease; min-width:0;
         }
-        .cw-input:focus { border-color: rgba(232,77,14,0.4); }
-        .cw-input::placeholder { color: rgba(255,255,255,0.2); }
+        .cw-input:focus { border-color:rgba(232,77,14,0.45); background:rgba(255,255,255,0.05); box-shadow:0 0 0 3px rgba(232,77,14,0.08); }
+        .cw-input::placeholder { color:rgba(255,255,255,0.2); }
         .cw-send {
-          width: 34px; height: 34px;
-          flex-shrink: 0;
-          border-radius: 9px;
-          background: #E84D0E;
-          color: #fff;
-          border: none;
-          cursor: pointer;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          transition: all 0.15s ease;
+          width:36px; height:36px; flex-shrink:0; border-radius:10px;
+          background:linear-gradient(135deg,#E84D0E,#c93d08); color:#fff; border:none;
+          cursor:pointer; display:flex; align-items:center; justify-content:center;
+          transition:all 0.18s ease; box-shadow:0 4px 14px rgba(232,77,14,0.35);
         }
-        .cw-send:not(:disabled):hover { background: #d44410; transform: scale(1.04); }
-        .cw-send:disabled { opacity: 0.35; cursor: not-allowed; }
+        .cw-send:not(:disabled):hover { background:linear-gradient(135deg,#f05a1a,#d44410); transform:scale(1.07); box-shadow:0 6px 20px rgba(232,77,14,0.5); }
+        .cw-send:not(:disabled):active { transform:scale(0.96); }
+        .cw-send:disabled { opacity:0.3; cursor:not-allowed; box-shadow:none; }
 
-        /* Mobile */
-        @media (max-width: 480px) {
-          .cw-root { bottom: 16px; right: 12px; }
-          .cw-window {
-            position: fixed;
-            bottom: 0; right: 0; left: 0;
-            width: 100%;
-            height: 88vh;
-            border-radius: 16px 16px 0 0;
-          }
-          .cw-bubble { width: 54px; height: 54px; }
+        @media (max-width:480px) {
+          .cw-root { bottom:16px; right:12px; }
+          .cw-window { position:fixed; bottom:0; right:0; left:0; width:100%; height:88vh; border-radius:20px 20px 0 0; border-bottom:none; }
+          .cw-bubble { width:54px; height:54px; }
         }
-        @media (min-width: 481px) and (max-width: 768px) {
-          .cw-window { width: calc(100vw - 48px); max-width: 360px; height: 500px; }
+        @media (min-width:481px) and (max-width:768px) {
+          .cw-window { width:calc(100vw - 48px); max-width:368px; height:520px; }
         }
       `}</style>
     </>

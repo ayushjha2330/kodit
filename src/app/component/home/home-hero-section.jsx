@@ -4,6 +4,7 @@ import Link from "next/link";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ServiceMarquee from "../service/service-marquee-section";
+import HeroThreeCanvas from "./hero-three-canvas";
 
 export default function Hero() {
   const sectionRef = useRef(null);
@@ -153,6 +154,7 @@ export default function Hero() {
 
   return (
     <section ref={sectionRef} className="hero-root">
+      <HeroThreeCanvas />
       <div className="noise-overlay" />
       <div ref={glowRef} className="hero-glow-1" />
       <div className="hero-glow-2" />
