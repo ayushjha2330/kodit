@@ -18,7 +18,7 @@ export default function AboutValuesSection() {
       gsap.fromTo(".au-value-card",
         { y: 60, opacity: 0, rotateX: 8 },
         { y: 0, opacity: 1, rotateX: 0, duration: 0.75, stagger: 0.13, ease: "power3.out",
-          scrollTrigger: { trigger: ".au-values", start: "top 78%" } }
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%" } }
       );
     }, sectionRef);
 

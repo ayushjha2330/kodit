@@ -1,10 +1,21 @@
 import ContactClient from "./ContactClient";
 
 export const metadata = {
-  title: "Contact Us | KODIT Agency",
-  description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development (React, Next.js, MERN), local SEO, GBP optimization, graphic design, social media marketing, and AI automation. Schedule a consultation or visit us.",
+  title: "Contact KODIT Agency Delhi — Book a Free Digital Discovery Call",
+  description:
+    "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development (React, Next.js, MERN), local SEO, GBP optimization, graphic design, social media marketing, and AI automation. Book a free discovery call. We typically reply within 4 hours.",
   keywords: [
     "Contact KODIT Agency",
+    "contact KODIT agency",
+    "digital agency Delhi contact",
+    "web development Delhi quote",
+    "SEO services Delhi",
+    "free discovery call digital agency",
+    "website design Delhi contact",
+    "marketing agency Delhi",
+    "MERN stack developer Delhi contact",
+    "React Next.js developer Delhi",
+    "HTML CSS JS designer Delhi",
     "digital marketing consultation Delhi",
     "hire web developers Delhi NCR",
     "hire SEO experts Delhi",
@@ -16,15 +27,15 @@ export const metadata = {
     canonical: "https://kodit.agency/contact",
   },
   openGraph: {
-    title: "Contact Us | KODIT Agency — New Delhi's Digital Experts",
-    description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development, local SEO, GBP optimization, and AI automation. Start your digital journey today.",
+    title: "Contact KODIT Agency Delhi — Free Discovery Call",
+    description: "Get in touch with KODIT Agency in New Delhi for web development, SEO, and marketing. Free consultations. We reply within 4 hours.",
     url: "https://kodit.agency/contact",
     images: [{ url: "https://kodit.agency/opengraph.png", width: 1200, height: 630, alt: "Contact KODIT Agency" }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact Us | KODIT Agency — New Delhi's Digital Experts",
-    description: "Get in touch with KODIT Agency in New Delhi. Contact us for custom web development, local SEO, GBP optimization, and AI automation. Start your digital journey today.",
+    title: "Contact KODIT Agency Delhi — Free Discovery Call",
+    description: "Contact us in New Delhi for web development, SEO, and marketing. Free consultations.",
     images: ["https://kodit.agency/opengraph.png"],
   }
 };

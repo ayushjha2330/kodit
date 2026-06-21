@@ -11,12 +11,12 @@ export default function AboutStorySection() {
       gsap.fromTo(".au-story-text > *",
         { y: 40, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.8, stagger: 0.12, ease: "power3.out",
-          scrollTrigger: { trigger: ".au-story", start: "top 78%" } }
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%" } }
       );
       gsap.fromTo(".au-code-card",
         { scale: 0.92, opacity: 0, x: 50 },
         { scale: 1, opacity: 1, x: 0, duration: 1, ease: "power3.out",
-          scrollTrigger: { trigger: ".au-story", start: "top 78%" } }
+          scrollTrigger: { trigger: sectionRef.current, start: "top 78%" } }
       );
     }, sectionRef);
 
@@ -58,7 +58,7 @@ export default function AboutStorySection() {
         </div>
 
         {/* Code card */}
-          <div className="au-code-card">
+        <div className="au-code-card">
           <div className="au-code-dots">
             <span className="cd red" /><span className="cd yellow" /><span className="cd green" />
           </div>

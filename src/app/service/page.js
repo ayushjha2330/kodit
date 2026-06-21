@@ -1,42 +1,38 @@
-"use client";
-import { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Hero from "../component/service/service-hero-section";
-import Marquee from "../component/service/service-marquee-section";
-import Tabs from "../component/service/service-tabs-section";
-import Compare from "../component/service/service-compare-section";
-import Testimonials from "../component/service/service-testimonials-section";
-import List from "../component/service/service-list-section";
-import "./service.css";
+import ServiceClient from "./ServiceClient";
 
-gsap.registerPlugin(ScrollTrigger);
+export const metadata = {
+  title: "Web Development, SEO, GMB & AI Automation Services — KODIT Agency Delhi",
+  description:
+    "KODIT Agency offers 6 digital services from Delhi: Web Development (HTML, CSS, JS, React, Next.js, Node.js, Express, MongoDB, Tailwind, Bootstrap), SEO, Google Business Profile Optimization, Graphic Design, Social Media Marketing, and AI Automation. Help your business get more customers online.",
+  keywords: [
+    "web development services Delhi", "SEO company Delhi", "Google Business Profile optimization",
+    "graphic design services Delhi", "social media marketing agency Delhi",
+    "AI automation services India", "digital services Delhi NCR",
+    "website design Delhi", "SEO services India",
+    "MERN stack development Delhi", "full stack web development Delhi",
+    "HTML CSS JS developer Delhi", "answer engine optimization agency",
+    "generative engine optimization services", "AEO GEO optimization Delhi"
+  ],
+  openGraph: {
+    title: "Digital Services — Web Dev, SEO, GMB & AI Automation | KODIT Agency Delhi",
+    description: "6 digital services from Delhi: Web Development (MERN stack, React, Next.js), SEO, Google Business Profile Optimization, Design, Social Media, and AI Automation for businesses across India.",
+    url: 'https://kodit.agency/service',
+    siteName: 'KODIT Agency',
+    locale: 'en_IN',
+    type: 'website',
+    images: [{ url: 'https://kodit.agency/opengraph.png', width: 1200, height: 630, alt: "KODIT Agency Services" }],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Digital Services — Web Dev, SEO, GMB & AI Automation | KODIT Agency Delhi',
+    description: '6 digital services from Delhi: Web Development (React, Next.js, MERN stack), SEO, Google Maps optimization, Design, Social Media, and AI Automation.',
+    images: ['https://kodit.agency/opengraph.png'],
+  },
+  alternates: {
+    canonical: 'https://kodit.agency/service',
+  },
+};
 
 export default function ServicesPage() {
-  const [active, setActive] = useState(0);
-  const rootRef = useRef(null);
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      /* Parallax */
-      gsap.to(".sv-glow", {
-        y: -80, ease: "none",
-        scrollTrigger: { trigger: rootRef.current, start: "top top", end: "bottom top", scrub: true },
-      });
-    }, rootRef);
-
-    return () => ctx.revert();
-  }, []);
-
-  return (
-    <main ref={rootRef} className="sv-root">
-      <div className="sv-glow" />
-      <Hero />
-      <Marquee />
-      <Tabs active={active} setActive={setActive} />
-      <Compare />
-      <Testimonials />
-      <List />
-    </main>
-  );
+  return <ServiceClient />;
 }
