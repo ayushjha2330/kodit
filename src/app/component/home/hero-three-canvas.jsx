@@ -84,61 +84,6 @@ export default function HeroThreeCanvas() {
       const particles = new THREE.Points(particleGeo, particleMat);
       scene.add(particles);
 
-      // ════════════════════════════════════════════════════════
-      // 2. WIREFRAME ICOSAHEDRON — orange, right side
-      // ════════════════════════════════════════════════════════
-      const icoGeo = new THREE.IcosahedronGeometry(1.6, 1);
-      const icoEdges = new THREE.EdgesGeometry(icoGeo);
-      const icoMat = new THREE.LineBasicMaterial({
-        color: 0xe84d0e,
-        transparent: true,
-        opacity: 0.22,
-        blending: THREE.AdditiveBlending,
-      });
-      const icosahedron = new THREE.LineSegments(icoEdges, icoMat);
-      icosahedron.position.set(3.8, -0.3, -1);
-      scene.add(icosahedron);
-
-      // Inner solid icosahedron with very low opacity for volume
-      const icoSolidMat = new THREE.MeshBasicMaterial({
-        color: 0xe84d0e,
-        transparent: true,
-        opacity: 0.03,
-        side: THREE.BackSide,
-      });
-      const icoSolid = new THREE.Mesh(icoGeo, icoSolidMat);
-      icoSolid.position.copy(icosahedron.position);
-      scene.add(icoSolid);
-
-      // ════════════════════════════════════════════════════════
-      // 3. TORUS KNOT — blue, top-left, more complex shape
-      // ════════════════════════════════════════════════════════
-      const knotGeo = new THREE.TorusKnotGeometry(0.9, 0.28, 120, 16, 2, 3);
-      const knotEdges = new THREE.EdgesGeometry(knotGeo);
-      const knotMat = new THREE.LineBasicMaterial({
-        color: 0x3b82f6,
-        transparent: true,
-        opacity: 0.15,
-        blending: THREE.AdditiveBlending,
-      });
-      const torusKnot = new THREE.LineSegments(knotEdges, knotMat);
-      torusKnot.position.set(-3.8, 0.9, -1.5);
-      scene.add(torusKnot);
-
-      // ════════════════════════════════════════════════════════
-      // 4. OCTAHEDRON — accent, bottom center
-      // ════════════════════════════════════════════════════════
-      const octGeo = new THREE.OctahedronGeometry(0.7, 0);
-      const octEdges = new THREE.EdgesGeometry(octGeo);
-      const octMat = new THREE.LineBasicMaterial({
-        color: 0xff6b35,
-        transparent: true,
-        opacity: 0.18,
-        blending: THREE.AdditiveBlending,
-      });
-      const octahedron = new THREE.LineSegments(octEdges, octMat);
-      octahedron.position.set(0.5, -2.5, 0.5);
-      scene.add(octahedron);
 
       // ════════════════════════════════════════════════════════
       // 5. CONNECTING NETWORK LINES
@@ -237,19 +182,6 @@ export default function HeroThreeCanvas() {
         particles.rotation.y = t * 0.018;
         particles.rotation.x = t * 0.007;
 
-        // Icosahedron
-        icosahedron.rotation.x = t * 0.22;
-        icosahedron.rotation.y = t * 0.31;
-        icoSolid.rotation.copy(icosahedron.rotation);
-
-        // Torus knot — complex rotation
-        torusKnot.rotation.x = t * 0.14;
-        torusKnot.rotation.y = t * 0.19;
-        torusKnot.rotation.z = t * 0.08;
-
-        // Octahedron
-        octahedron.rotation.x = t * 0.3;
-        octahedron.rotation.z = t * 0.2;
 
         // Rings pulse
         ring.rotation.z = t * 0.05;
